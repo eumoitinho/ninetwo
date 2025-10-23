@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../92dashboard-repo"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

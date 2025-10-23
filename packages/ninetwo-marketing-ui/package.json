@@ -1,0 +1,22 @@
+{
+  "name": "ninetwo-marketing-ui",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "peerDependencies": {
+    "echarts": "^5.4.0",
+    "echarts-for-react": "^3.0.0",
+    "ninetwo-ui": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "ninetwo-marketing-core": "workspace:*"
+  }
+}

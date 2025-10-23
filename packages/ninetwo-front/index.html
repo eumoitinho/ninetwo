@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/images/icons/web/favicon.ico"
+      data-rh="true"
+    />
+    <link rel="apple-touch-icon" href="/images/icons/web/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="NineTwo - Marketing Dashboard & CRM" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/twentyhq/twenty/main/docs/static/img/social-card.png"
+    />
+    <meta property="og:description" content="NineTwo - Marketing Dashboard & CRM" />
+    <meta property="og:title" content="NineTwo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/twentyhq/twenty/main/docs/static/img/social-card.png"
+    />
+
+    <meta name="twitter:description" content="NineTwo - Marketing Dashboard & CRM" />
+    <meta name="twitter:title" content="NineTwo" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+    />
+
+    <title>NineTwo</title>
+    <!-- BEGIN: NineTwo Config -->
+    <script id="ninetwo-env-config">
+      window._env_ = {
+        // This will be overwritten
+      };
+    </script>
+    <!-- END: NineTwo Config -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module">
+      const disableInputAutoZoom = () => {
+        const viewportMetadata = document.querySelector('meta[name=viewport]');
+
+        if (viewportMetadata !== null) {
+          viewportMetadata.setAttribute(
+            'content',
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0',
+          );
+        }
+      };
+
+      const isIOS = /iPad|iPhone/.test(navigator.userAgent);
+      if (isIOS) {
+        disableInputAutoZoom();
+      }
+    </script>
+    <style>
+      :root {
+        /* THEME_DARK.background.tertiary */
+        --theme-dark-background-tertiary: #1d1d1d;
+        /* THEME_LIGHT.background.tertiary */
+        --theme-light-background-tertiary: #f1f1f1;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        html,
+        body {
+          background-color: var(--theme-dark-background-tertiary);
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        html,
+        body {
+          background-color: var(--theme-light-background-tertiary);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

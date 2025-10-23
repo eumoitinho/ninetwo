@@ -1,0 +1,10 @@
+import { createState } from 'ninetwo-ui/utilities';
+import { type AvailableWorkspaces } from '~/generated/graphql';
+
+export const availableWorkspacesState = createState<AvailableWorkspaces>({
+  key: 'availableWorkspacesState',
+  defaultValue: {
+    availableWorkspacesForSignIn: [],
+    availableWorkspacesForSignUp: [],
+  },
+});

@@ -21,6 +21,8 @@ export default [
   {
     ignores: [
       '**/node_modules/**',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
     ],
   },
 
@@ -28,18 +30,21 @@ export default [
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      'prettier': prettierPlugin,
-      'lingui': linguiPlugin,
+      prettier: prettierPlugin,
+      lingui: linguiPlugin,
       '@nx': nxPlugin,
       'prefer-arrow': preferArrowPlugin,
-      'import': importPlugin,
+      import: importPlugin,
       'unused-imports': unusedImportsPlugin,
-      'unicorn': unicornPlugin,
+      unicorn: unicornPlugin,
     },
     rules: {
       // General rules
       'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
-      'no-console': ['warn', { allow: ['group', 'groupCollapsed', 'groupEnd'] }],
+      'no-console': [
+        'warn',
+        { allow: ['group', 'groupCollapsed', 'groupEnd'] },
+      ],
       'no-control-regex': 0,
       'no-debugger': 'error',
       'no-duplicate-imports': 'error',
@@ -129,7 +134,7 @@ export default [
         'error',
         {
           prefer: 'type-imports',
-          fixStyle: 'inline-type-imports'
+          fixStyle: 'inline-type-imports',
         },
       ],
       '@typescript-eslint/explicit-function-return-type': 'off',

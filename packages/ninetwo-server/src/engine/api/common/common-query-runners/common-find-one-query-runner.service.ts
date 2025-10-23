@@ -1,0 +1,173 @@
+import { Injectable } from '@nestjs/common';
+
+import { QUERY_MAX_RECORDS } from 'ninetwo-shared/constants';
+import { ObjectRecord } from 'ninetwo-shared/types';
+import { isDefined } from 'ninetwo-shared/utils';
+import { FindOptionsRelations, ObjectLiteral } from 'typeorm';
+
+import { WorkspaceAuthContext } from 'src/engine/api/common/interfaces/workspace-auth-context.interface';
+import { ObjectRecordFilter } from 'src/engine/api/graphql/workspace-query-builder/interfaces/object-record.interface';
+
+import { CommonBaseQueryRunnerService } from 'src/engine/api/common/common-query-runners/common-base-query-runner.service';
+import {
+  CommonQueryRunnerException,
+  CommonQueryRunnerExceptionCode,
+} from 'src/engine/api/common/common-query-runners/errors/common-query-runner.exception';
+import {
+  CommonQueryNames,
+  FindOneQueryArgs,
+} from 'src/engine/api/common/types/common-query-args.type';
+import { isWorkspaceAuthContext } from 'src/engine/api/common/utils/is-workspace-auth-context.util';
+import { GraphqlQueryParser } from 'src/engine/api/graphql/graphql-query-runner/graphql-query-parsers/graphql-query.parser';
+import { buildColumnsToSelect } from 'src/engine/api/graphql/graphql-query-runner/utils/build-columns-to-select';
+import { AuthContext } from 'src/engine/core-modules/auth/types/auth-context.type';
+import { ObjectMetadataItemWithFieldMaps } from 'src/engine/metadata-modules/types/object-metadata-item-with-field-maps';
+import { ObjectMetadataMaps } from 'src/engine/metadata-modules/types/object-metadata-maps';
+
+@Injectable()
+export class CommonFindOneQueryRunnerService extends CommonBaseQueryRunnerService {
+  async run({
+    args,
+    authContext,
+    objectMetadataMaps,
+    objectMetadataItemWithFieldMaps,
+  }: {
+    args: FindOneQueryArgs;
+    authContext: AuthContext;
+    objectMetadataMaps: ObjectMetadataMaps;
+    objectMetadataItemWithFieldMaps: ObjectMetadataItemWithFieldMaps;
+  }): Promise<ObjectRecord> {
+    if (!isWorkspaceAuthContext(authContext)) {
+      throw new CommonQueryRunnerException(
+        'Invalid auth context',
+        CommonQueryRunnerExceptionCode.INVALID_AUTH_CONTEXT,
+      );
+    }
+
+    const { workspaceDataSource, repository, rolePermissionConfig } =
+      await this.prepareQueryRunnerContext({
+        authContext,
+        objectMetadataItemWithFieldMaps,
+      });
+
+    //TODO : Refacto-common - QueryParser should be common branded service
+    const commonQueryParser = new GraphqlQueryParser(
+      objectMetadataItemWithFieldMaps,
+      objectMetadataMaps,
+    );
+
+    const selectedFieldsResult = commonQueryParser.parseSelectedFields(
+      objectMetadataItemWithFieldMaps,
+      args.selectedFields,
+      objectMetadataMaps,
+    );
+
+    const processedArgs = await this.processQueryArgs({
+      authContext,
+      objectMetadataItemWithFieldMaps,
+      args,
+    });
+
+    if (
+      !processedArgs.filter ||
+      Object.keys(processedArgs.filter).length === 0
+    ) {
+      throw new CommonQueryRunnerException(
+        'Missing filter argument',
+        CommonQueryRunnerExceptionCode.INVALID_QUERY_INPUT,
+      );
+    }
+
+    const queryBuilder = repository.createQueryBuilder(
+      objectMetadataItemWithFieldMaps.nameSingular,
+    );
+
+    commonQueryParser.applyFilterToBuilder(
+      queryBuilder,
+      objectMetadataItemWithFieldMaps.nameSingular,
+      processedArgs.filter ?? ({} as ObjectRecordFilter),
+    );
+
+    commonQueryParser.applyDeletedAtToBuilder(
+      queryBuilder,
+      processedArgs.filter ?? ({} as ObjectRecordFilter),
+    );
+
+    const columnsToSelect = buildColumnsToSelect({
+      select: selectedFieldsResult.select,
+      relations: selectedFieldsResult.relations,
+      objectMetadataItemWithFieldMaps,
+      objectMetadataMaps,
+    });
+
+    const objectRecord = await queryBuilder
+      .setFindOptions({
+        select: columnsToSelect,
+      })
+      .getOne();
+
+    if (!objectRecord) {
+      throw new CommonQueryRunnerException(
+        'Record not found',
+        CommonQueryRunnerExceptionCode.RECORD_NOT_FOUND,
+      );
+    }
+
+    const objectRecords = [objectRecord] as ObjectRecord[];
+
+    if (isDefined(selectedFieldsResult.relations)) {
+      await this.processNestedRelationsHelper.processNestedRelations({
+        objectMetadataMaps,
+        parentObjectMetadataItem: objectMetadataItemWithFieldMaps,
+        parentObjectRecords: objectRecords,
+        //TODO : Refacto-common - To fix when switching processNestedRelationsHelper to Common
+        relations: selectedFieldsResult.relations as Record<
+          string,
+          FindOptionsRelations<ObjectLiteral>
+        >,
+        limit: QUERY_MAX_RECORDS,
+        authContext,
+        workspaceDataSource,
+        rolePermissionConfig,
+        selectedFields: selectedFieldsResult.select,
+      });
+    }
+
+    const enrichedResults = await this.enrichResultsWithGettersAndHooks({
+      results: objectRecords,
+      authContext,
+      objectMetadataItemWithFieldMaps,
+      objectMetadataMaps,
+      operationName: CommonQueryNames.FIND_ONE,
+    });
+
+    return enrichedResults[0];
+  }
+
+  async processQueryArgs({
+    authContext,
+    objectMetadataItemWithFieldMaps,
+    args,
+  }: {
+    authContext: WorkspaceAuthContext;
+    objectMetadataItemWithFieldMaps: ObjectMetadataItemWithFieldMaps;
+    args: FindOneQueryArgs;
+  }): Promise<FindOneQueryArgs> {
+    const hookedArgs =
+      (await this.workspaceQueryHookService.executePreQueryHooks(
+        authContext,
+        objectMetadataItemWithFieldMaps.nameSingular,
+        CommonQueryNames.FIND_ONE,
+        args,
+        //TODO : Refacto-common - To fix when updating workspaceQueryHookService, removing gql typing dependency
+      )) as FindOneQueryArgs;
+
+    return {
+      ...hookedArgs,
+      filter: this.queryRunnerArgsFactory.overrideFilterByFieldMetadata(
+        hookedArgs.filter,
+        objectMetadataItemWithFieldMaps,
+      ),
+    };
+  }
+}

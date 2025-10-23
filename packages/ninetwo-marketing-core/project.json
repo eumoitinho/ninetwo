@@ -1,0 +1,27 @@
+{
+  "name": "ninetwo-marketing-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ninetwo-marketing-core/src",
+  "projectType": "library",
+  "tags": ["scope:shared"],
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{projectRoot}/dist"],
+      "options": {
+        "configFile": "packages/ninetwo-marketing-core/vite.config.ts",
+        "outputPath": "packages/ninetwo-marketing-core/dist"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/ninetwo-marketing-core/jest.config.ts"
+      }
+    }
+  }
+}

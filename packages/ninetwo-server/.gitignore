@@ -1,0 +1,5 @@
+dist/*
+.local-storage
+logs/**/*
+*.log
+.env.local

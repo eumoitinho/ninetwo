@@ -1,0 +1,29 @@
+{
+  "name": "ninetwo-marketing-meta",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ninetwo-marketing-meta/src",
+  "projectType": "library",
+  "tags": ["scope:marketing"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ninetwo-marketing-meta",
+        "main": "packages/ninetwo-marketing-meta/src/index.ts",
+        "tsConfig": "packages/ninetwo-marketing-meta/tsconfig.lib.json",
+        "assets": ["packages/ninetwo-marketing-meta/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/ninetwo-marketing-meta/jest.config.ts"
+      }
+    }
+  }
+}

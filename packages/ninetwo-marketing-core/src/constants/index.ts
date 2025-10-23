@@ -1,0 +1,7 @@
+export {
+    GOOGLE_ADS_SCOPES,
+    GOOGLE_ANALYTICS_SCOPES,
+    MARKETING_OAUTH_SCOPES,
+    META_ADS_SCOPES
+} from './scopes';
+

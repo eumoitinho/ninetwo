@@ -1,0 +1,37 @@
+import gql from 'graphql-tag';
+
+import { type ObjectMetadataItem } from '@/object-metadata/types/ObjectMetadataItem';
+import { capitalize } from 'ninetwo-shared/utils';
+import { getGroupByQueryName } from '../../../utils/getGroupByQueryName';
+
+export const generateGroupByQuery = ({
+  objectMetadataItem,
+  aggregateOperations,
+}: {
+  objectMetadataItem: ObjectMetadataItem;
+  aggregateOperations: string[];
+}) => {
+  const capitalizedSingular = capitalize(objectMetadataItem.nameSingular);
+  const queryName = `${capitalize(objectMetadataItem.namePlural)}GroupBy`;
+  const queryFieldName = getGroupByQueryName(objectMetadataItem);
+
+  return gql`
+    query ${queryName}(
+      $groupBy: [${capitalizedSingular}GroupByInput!]
+      $filter: ${capitalizedSingular}FilterInput
+      $orderBy: [${capitalizedSingular}OrderByWithGroupByInput!]
+      $omitNullValues: Boolean
+      $viewId: UUID
+    ) {
+      ${queryFieldName}(
+        groupBy: $groupBy
+        filter: $filter
+        orderBy: $orderBy
+        omitNullValues: $omitNullValues
+        viewId: $viewId
+      ) {
+        groupByDimensionValues${aggregateOperations.length > 0 ? `\n        ${aggregateOperations.join('\n        ')}` : ''}
+      }
+    }
+  `;
+};

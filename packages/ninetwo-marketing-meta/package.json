@@ -1,0 +1,15 @@
+{
+  "name": "ninetwo-marketing-meta",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "ninetwo-marketing-core": "workspace:*"
+  }
+}

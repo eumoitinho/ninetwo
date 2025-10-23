@@ -48,3 +48,7 @@ dump.rdb
 
 mcp.json
 /.junie/
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*twenty-occurrences.txt
+packages/ninetwo-server/.env.local
