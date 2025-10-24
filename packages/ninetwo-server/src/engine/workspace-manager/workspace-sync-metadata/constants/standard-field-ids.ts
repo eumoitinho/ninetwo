@@ -237,6 +237,65 @@ export const MESSAGE_CHANNEL_MESSAGE_ASSOCIATION_STANDARD_FIELD_IDS = {
   messageThreadExternalId: '20202020-35fb-421e-afa0-0b8e8f7f9018',
 } as const;
 
+export const ADS_CAMPAIGN_STANDARD_FIELD_IDS = {
+  name: '20202020-a1b2-4c21-9d32-5e6f7a8b9c0d',
+  externalId: '20202020-b2c3-4d32-0e43-6f7a8b9c0d1e',
+  status: '20202020-c3d4-4e43-1f54-7a8b9c0d1e2f',
+  advertisingChannelType: '20202020-d4e5-4f54-2a65-8b9c0d1e2f3a',
+  budget: '20202020-e5f6-4a65-3b76-9c0d1e2f3a4b',
+  impressions: '20202020-f6a7-4b76-4c87-0d1e2f3a4b5c',
+  clicks: '20202020-a7b8-4c87-5d98-1e2f3a4b5c6d',
+  costMicros: '20202020-b8c9-4d98-6e09-2f3a4b5c6d7e',
+  conversions: '20202020-c9d0-4e09-7f10-3a4b5c6d7e8f',
+  conversionValue: '20202020-d0e1-4f10-8a21-4b5c6d7e8f9a',
+  ctr: '20202020-e1f2-4a21-9b32-5c6d7e8f9a0b',
+  averageCpc: '20202020-f2a3-4b32-0c43-6d7e8f9a0b1c',
+  averageCpa: '20202020-a3b4-4c43-1d54-7e8f9a0b1c2d',
+  roas: '20202020-b4c5-4d54-2e65-8f9a0b1c2d3e',
+  customerId: '20202020-c5d6-4e65-3f76-9a0b1c2d3e4f',
+  startDate: '20202020-d6e7-4f76-4a87-0b1c2d3e4f5a',
+  endDate: '20202020-e7f8-4a87-5b98-1c2d3e4f5a6b',
+  lastSyncedAt: '20202020-f8a9-4b98-6c09-2d3e4f5a6b7c',
+  marketingChannel: '20202020-a9b0-4c09-7d10-3e4f5a6b7c8d',
+} as const;
+
+export const ANALYTICS_DATA_STANDARD_FIELD_IDS = {
+  date: '20202020-b0c1-4d10-8e21-4f5a6b7c8d9e',
+  propertyId: '20202020-c1d2-4e21-9f32-5a6b7c8d9e0f',
+  sessions: '20202020-d2e3-4f32-0a43-6b7c8d9e0f1a',
+  totalUsers: '20202020-e3f4-4a43-1b54-7c8d9e0f1a2b',
+  newUsers: '20202020-f4a5-4b54-2c65-8d9e0f1a2b3c',
+  activeUsers: '20202020-a5b6-4c65-3d76-9e0f1a2b3c4d',
+  screenPageViews: '20202020-b6c7-4d76-4e87-0f1a2b3c4d5e',
+  screenPageViewsPerSession: '20202020-c7d8-4e87-5f98-1a2b3c4d5e6f',
+  averageSessionDuration: '20202020-d8e9-4f98-6a09-2b3c4d5e6f7a',
+  bounceRate: '20202020-e9f0-4a09-7b10-3c4d5e6f7a8b',
+  engagementRate: '20202020-f0a1-4b10-8c21-4d5e6f7a8b9c',
+  engagedSessions: '20202020-a1b2-4c21-9d32-5e6f7a8b9c0d',
+  conversions: '20202020-b2c3-4d32-0e43-6f7a8b9c0d1e',
+  totalRevenue: '20202020-c3d4-4e43-1f54-7a8b9c0d1e2f',
+  ecommercePurchases: '20202020-d4e5-4f54-2a65-8b9c0d1e2f3a',
+  purchaseRevenue: '20202020-e5f6-4a65-3b76-9c0d1e2f3a4b',
+  sessionSource: '20202020-f6a7-4b76-4c87-0d1e2f3a4b5c',
+  sessionMedium: '20202020-a7b8-4c87-5d98-1e2f3a4b5c6d',
+  sessionCampaign: '20202020-b8c9-4d98-6e09-2f3a4b5c6d7e',
+  deviceCategory: '20202020-c9d0-4e09-7f10-3a4b5c6d7e8f',
+  country: '20202020-d0e1-4f10-8a21-4b5c6d7e8f9a',
+  city: '20202020-e1f2-4a21-9b32-5c6d7e8f9a0b',
+  landingPage: '20202020-f2a3-4b32-0c43-6d7e8f9a0b1c',
+  marketingChannel: '20202020-a3b4-4c43-1d54-7e8f9a0b1c2d',
+} as const;
+
+export const MARKETING_DASHBOARD_STANDARD_FIELD_IDS = {
+  name: '20202020-b4c5-4d54-2e65-8f9a0b1c2d3e',
+  description: '20202020-c5d6-4e65-3f76-9a0b1c2d3e4f',
+  kpiConfig: '20202020-d6e7-4f76-4a87-0b1c2d3e4f5a',
+  dateRange: '20202020-e7f8-4a87-5b98-1c2d3e4f5a6b',
+  filters: '20202020-f8a9-4b98-6c09-2d3e4f5a6b7c',
+  isDefault: '20202020-a9b0-4c09-7d10-3e4f5a6b7c8d',
+  layout: '20202020-b0c1-4d10-8e21-4f5a6b7c8d9e',
+} as const;
+
 export const MARKETING_CHANNEL_STANDARD_FIELD_IDS = {
   handle: '20202020-a1f8-4d21-9f32-4e5b6c7d8e9f',
   connectedAccount: '20202020-b2e9-4e32-8a43-5f6c7d8e9f0a',
@@ -249,6 +308,8 @@ export const MARKETING_CHANNEL_STANDARD_FIELD_IDS = {
   syncedAt: '20202020-c9f6-4f09-3b10-2a3d4e5f6a7b',
   throttleFailureCount: '20202020-d0a7-4a10-4c21-3b4e5f6a7b8c',
   accountConfig: '20202020-e1b8-4b21-5d32-4c5f6a7b8c9d',
+  adsCampaigns: '20202020-f1c9-4c32-6e43-5d6f7a8b9c0e',
+  analyticsData: '20202020-a2d0-4d43-7f54-6e7a8b9c0d1f',
 } as const;
 
 export const MESSAGE_CHANNEL_STANDARD_FIELD_IDS = {

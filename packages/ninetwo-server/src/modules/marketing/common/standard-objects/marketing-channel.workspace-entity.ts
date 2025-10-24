@@ -290,5 +290,27 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
 
   @WorkspaceJoinColumn('connectedAccount')
   connectedAccountId: string;
+
+  @WorkspaceRelation({
+    standardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.adsCampaigns,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Ads Campaigns`,
+    description: msg`Ads Campaigns`,
+    icon: 'IconTargetArrow',
+    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity').AdsCampaignWorkspaceEntity,
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  adsCampaigns: Relation<any[]>;
+
+  @WorkspaceRelation({
+    standardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.analyticsData,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Analytics Data`,
+    description: msg`Analytics Data`,
+    icon: 'IconChartBar',
+    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/analytics-data.workspace-entity').AnalyticsDataWorkspaceEntity,
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  analyticsData: Relation<any[]>;
 }
 
