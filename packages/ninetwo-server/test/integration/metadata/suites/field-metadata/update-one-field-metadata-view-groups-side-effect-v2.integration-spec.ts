@@ -11,7 +11,7 @@ import { createOneCoreView } from 'test/integration/metadata/suites/view/utils/c
 import {
   FieldMetadataType,
   type EnumFieldMetadataType,
-} from 'twenty-shared/types';
+} from 'ninetwo-shared/types';
 
 import {
   type FieldMetadataComplexOption,

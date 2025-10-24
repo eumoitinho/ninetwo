@@ -21,7 +21,7 @@ import {
   assertViewFieldStructure,
   cleanupViewRecords,
 } from 'test/integration/utils/view-test.util';
-import { FieldMetadataType } from 'twenty-shared/types';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 
 import {
   generateViewFieldExceptionMessage,

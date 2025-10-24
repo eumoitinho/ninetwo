@@ -11,13 +11,13 @@ import {
   createTestViewWithRestApi,
   findViewFilterWithRestApi,
 } from 'test/integration/rest/utils/view-rest-api.util';
-import { type EachTestingContext } from 'twenty-shared/testing';
+import { type EachTestingContext } from 'ninetwo-shared/testing';
 import {
   type EnumFieldMetadataType,
   FieldMetadataType,
   ViewFilterOperand,
-} from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
+} from 'ninetwo-shared/types';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { FeatureFlagKey } from 'src/engine/core-modules/feature-flag/enums/feature-flag-key.enum';
 import {

@@ -3,11 +3,11 @@ import { createRelationBetweenObjects } from 'test/integration/metadata/suites/o
 import { deleteOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/delete-one-object-metadata.util';
 import { updateOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/update-one-object-metadata.util';
 import { makeMetadataAPIRequest } from 'test/integration/metadata/suites/utils/make-metadata-api-request.util';
-import { type EachTestingContext } from 'twenty-shared/testing';
-import { FieldMetadataType } from 'twenty-shared/types';
+import { type EachTestingContext } from 'ninetwo-shared/testing';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 import { createOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/create-one-object-metadata.util';
 import { jestExpectToBeDefined } from 'test/utils/expect-to-be-defined.util.test';
-import { isDefined } from 'twenty-shared/utils';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { RelationType } from 'src/engine/metadata-modules/field-metadata/interfaces/relation-type.interface';
 

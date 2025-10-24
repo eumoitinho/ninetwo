@@ -4,7 +4,7 @@ import { deleteOneObjectMetadata } from 'test/integration/metadata/suites/object
 import { findManyObjectMetadataWithIndexes } from 'test/integration/metadata/suites/object-metadata/utils/find-many-object-metadata-with-indexes.util';
 import { updateOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/update-one-object-metadata.util';
 import { jestExpectToBeDefined } from 'test/utils/expect-to-be-defined.util.test';
-import { FieldMetadataType } from 'twenty-shared/types';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 
 const findObjectWithIndex = async ({
   objectMetadataId,

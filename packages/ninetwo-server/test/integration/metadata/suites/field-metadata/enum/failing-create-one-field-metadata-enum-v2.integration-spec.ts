@@ -5,8 +5,8 @@ import { createOneObjectMetadata } from 'test/integration/metadata/suites/object
 import { deleteOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/delete-one-object-metadata.util';
 import { updateOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/update-one-object-metadata.util';
 import { extractRecordIdsAndDatesAsExpectAny } from 'test/utils/extract-record-ids-and-dates-as-expect-any';
-import { eachTestingContextFilter } from 'twenty-shared/testing';
-import { isDefined } from 'twenty-shared/utils';
+import { eachTestingContextFilter } from 'ninetwo-shared/testing';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { fieldMetadataEnumTypes } from 'src/engine/metadata-modules/field-metadata/utils/is-enum-field-metadata-type.util';
 

@@ -9,8 +9,8 @@ import { Workspace } from 'src/engine/core-modules/workspace/workspace.entity';
 
 import { JwtAuthStrategy } from './jwt.auth.strategy';
 
-jest.mock('twenty-shared/utils', () => ({
-  ...jest.requireActual('twenty-shared/utils'),
+jest.mock('ninetwo-shared/utils', () => ({
+  ...jest.requireActual<typeof import('ninetwo-shared/utils')>('ninetwo-shared/utils'),
   assertIsDefinedOrThrow: jest.fn((value, error) => {
     if (value === null || value === undefined) {
       throw error;

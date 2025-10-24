@@ -9,7 +9,7 @@ import { findManyObjectMetadataWithIndexes } from 'test/integration/metadata/sui
 import { updateOneObjectMetadata } from 'test/integration/metadata/suites/object-metadata/utils/update-one-object-metadata.util';
 import { jestExpectToBeDefined } from 'test/utils/expect-to-be-defined.util.test';
 import { extractRecordIdsAndDatesAsExpectAny } from 'test/utils/extract-record-ids-and-dates-as-expect-any';
-import { FieldMetadataType, RelationType } from 'twenty-shared/types';
+import { FieldMetadataType, RelationType } from 'ninetwo-shared/types';
 
 describe('Index metadata creation on relation field creation v2', () => {
   let createdObjectId: string;

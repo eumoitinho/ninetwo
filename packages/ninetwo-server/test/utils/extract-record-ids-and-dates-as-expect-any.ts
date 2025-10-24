@@ -1,4 +1,4 @@
-import { isDefined } from 'twenty-shared/utils';
+import { isDefined } from 'ninetwo-shared/utils';
 
 export const extractRecordIdsAndDatesAsExpectAny = (
   record: Record<string, unknown> | Array<Record<string, unknown>>,

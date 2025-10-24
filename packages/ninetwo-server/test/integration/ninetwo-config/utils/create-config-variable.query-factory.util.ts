@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-core';
-import { type ConfigVariableValue } from 'twenty-shared/types';
+import { type ConfigVariableValue } from 'ninetwo-shared/types';
 
 export type CreateConfigVariableFactoryInput = {
   key: string;

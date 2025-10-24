@@ -7,8 +7,8 @@ import { createOneCoreViewGroup } from 'test/integration/metadata/suites/view-gr
 import { createOneCoreView } from 'test/integration/metadata/suites/view/utils/create-one-core-view.util';
 import { findOneCoreView } from 'test/integration/metadata/suites/view/utils/find-one-core-view.util';
 import { generateRecordName } from 'test/integration/utils/generate-record-name';
-import { FieldMetadataType } from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
+import { FieldMetadataType } from 'ninetwo-shared/types';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { ViewType } from 'src/engine/metadata-modules/view/enums/view-type.enum';
 

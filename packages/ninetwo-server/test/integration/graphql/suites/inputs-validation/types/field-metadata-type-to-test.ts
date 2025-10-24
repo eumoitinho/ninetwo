@@ -1,4 +1,4 @@
-import { type FieldMetadataType } from 'twenty-shared/types';
+import { type FieldMetadataType } from 'ninetwo-shared/types';
 
 type FieldMetadataTypesNotTestedForFilterInputValidation =
   | 'TS_VECTOR'

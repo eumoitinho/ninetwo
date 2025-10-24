@@ -10,7 +10,7 @@ import { destroyOneCoreViewFilter } from 'test/integration/metadata/suites/view-
 import { findCoreViewFilters } from 'test/integration/metadata/suites/view-filter/utils/find-core-view-filters.util';
 import { updateOneCoreViewFilter } from 'test/integration/metadata/suites/view-filter/utils/update-one-core-view-filter.util';
 import { cleanupViewRecords } from 'test/integration/utils/view-test.util';
-import { FieldMetadataType, ViewFilterOperand } from 'twenty-shared/types';
+import { FieldMetadataType, ViewFilterOperand } from 'ninetwo-shared/types';
 
 const TEST_NOT_EXISTING_VIEW_FILTER_ID = '20202020-52c5-4152-8c09-76a845fb8ece';
 

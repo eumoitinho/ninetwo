@@ -1,4 +1,4 @@
-import { FieldMetadataType } from 'twenty-shared/types';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 export type InputData = { [x: string]: any };
 
 export type NodeField = {

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { capitalize } from 'twenty-shared/utils';
+import { capitalize } from 'ninetwo-shared/utils';
 
 type CreateManyOperationFactoryParams = {
   objectMetadataSingularName: string;

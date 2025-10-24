@@ -7,10 +7,13 @@ const envResult = config({
 });
 
 if (envResult.error) {
-  throw new Error('Failed to load .env file');
+  // Fail fast if the .env file can't be loaded
+  // This protects against missing environment config
+  // in e2e testing, which could cause misleading results
+  throw new Error(
+    `Failed to load .env file: ${envResult.error?.message || ''}`.trim()
+  );
 }
-
-/* === Run your local dev server before starting the tests === */
 
 /**
  * See https://playwright.dev/docs/test-configuration.

@@ -6,7 +6,7 @@ import {
   FieldMetadataType,
   RelationType,
   type RelationCreationPayload,
-} from 'twenty-shared/types';
+} from 'ninetwo-shared/types';
 
 import { type FieldMetadataComplexOption } from 'src/engine/metadata-modules/field-metadata/dtos/options.input';
 

@@ -10,8 +10,8 @@ import { assertViewFieldStructure } from 'test/integration/utils/view-test.util'
 import {
   type EachTestingContext,
   eachTestingContextFilter,
-} from 'twenty-shared/testing';
-import { isDefined } from 'twenty-shared/utils';
+} from 'ninetwo-shared/testing';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { type CreateViewFieldInput } from 'src/engine/metadata-modules/view-field/dtos/inputs/create-view-field.input';
 import { type ViewFieldDTO } from 'src/engine/metadata-modules/view-field/dtos/view-field.dto';

@@ -6,7 +6,7 @@ import { expectRestCreateInputValidationError } from 'test/integration/graphql/s
 import { expectRestCreateInputValidationSuccess } from 'test/integration/graphql/suites/inputs-validation/create-validation/utils/expect-rest-create-input-validation-success.util';
 import { destroyManyObjectsMetadata } from 'test/integration/graphql/suites/inputs-validation/utils/destroy-many-objects-metadata';
 import { setupTestObjectsWithAllFieldTypes } from 'test/integration/graphql/suites/inputs-validation/utils/setup-test-objects-with-all-field-types.util';
-import { FieldMetadataType } from 'twenty-shared/types';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 
 const FIELD_METADATA_TYPE = FieldMetadataType.SELECT;
 

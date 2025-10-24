@@ -1,5 +1,5 @@
 import { type CreateOneFieldFactoryInput } from 'test/integration/metadata/suites/field-metadata/utils/create-one-field-metadata-query-factory.util';
-import { type EachTestingContext } from 'twenty-shared/testing';
+import { type EachTestingContext } from 'ninetwo-shared/testing';
 
 import { type FieldMetadataComplexOption } from 'src/engine/metadata-modules/field-metadata/dtos/options.input';
 

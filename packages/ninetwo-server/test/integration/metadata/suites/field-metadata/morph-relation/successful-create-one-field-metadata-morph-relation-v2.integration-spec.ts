@@ -7,9 +7,9 @@ import { updateOneObjectMetadata } from 'test/integration/metadata/suites/object
 import {
   eachTestingContextFilter,
   type EachTestingContext,
-} from 'twenty-shared/testing';
-import { FieldMetadataType } from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
+} from 'ninetwo-shared/testing';
+import { FieldMetadataType } from 'ninetwo-shared/types';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import { RelationType } from 'src/engine/metadata-modules/field-metadata/interfaces/relation-type.interface';
 

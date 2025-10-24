@@ -11,7 +11,7 @@ import { findManyObjectMetadata } from 'test/integration/metadata/suites/object-
 import { createOneCoreViewFilter } from 'test/integration/metadata/suites/view-filter/utils/create-one-core-view-filter.util';
 import { createOneCoreView } from 'test/integration/metadata/suites/view/utils/create-one-core-view.util';
 import { jestExpectToBeDefined } from 'test/utils/expect-to-be-defined.util.test';
-import { ViewFilterOperand } from 'twenty-shared/types';
+import { ViewFilterOperand } from 'ninetwo-shared/types';
 
 import { type FieldMetadataDTO } from 'src/engine/metadata-modules/field-metadata/dtos/field-metadata.dto';
 import { type ObjectMetadataDTO } from 'src/engine/metadata-modules/object-metadata/dtos/object-metadata.dto';

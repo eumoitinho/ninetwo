@@ -1,4 +1,4 @@
-import { type EachTestingContext } from 'twenty-shared/testing';
+import { type EachTestingContext } from 'ninetwo-shared/testing';
 
 import { type CreateObjectInput } from 'src/engine/metadata-modules/object-metadata/dtos/create-object.input';
 

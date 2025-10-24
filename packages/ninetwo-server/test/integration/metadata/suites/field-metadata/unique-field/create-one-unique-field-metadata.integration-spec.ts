@@ -6,8 +6,8 @@ import { extractRecordIdsAndDatesAsExpectAny } from 'test/utils/extract-record-i
 import {
   eachTestingContextFilter,
   type EachTestingContext,
-} from 'twenty-shared/testing';
-import { FieldMetadataType } from 'twenty-shared/types';
+} from 'ninetwo-shared/testing';
+import { FieldMetadataType } from 'ninetwo-shared/types';
 
 import { type CreateFieldInput } from 'src/engine/metadata-modules/field-metadata/dtos/create-field.input';
 

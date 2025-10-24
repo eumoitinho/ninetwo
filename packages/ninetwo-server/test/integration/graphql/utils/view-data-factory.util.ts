@@ -1,4 +1,4 @@
-import { ViewFilterOperand } from 'twenty-shared/types';
+import { ViewFilterOperand } from 'ninetwo-shared/types';
 
 import { type UpdateViewFieldInput } from 'src/engine/metadata-modules/view-field/dtos/inputs/update-view-field.input';
 import { type ViewFieldEntity } from 'src/engine/metadata-modules/view-field/entities/view-field.entity';

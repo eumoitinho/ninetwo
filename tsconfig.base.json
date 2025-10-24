@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -14,34 +13,7 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@/marketing/core": ["packages/ninetwo-marketing-core/src/index.ts"],
-      "@/marketing/core-lib": ["packages/ninetwo-marketing-core/src/index.ts"],
-      "@/marketing/google": ["packages/ninetwo-marketing-google/src/index.ts"],
-      "@/marketing/google-lib": ["packages/ninetwo-marketing-google/src/index.ts"],
-      "@/marketing/meta": ["packages/ninetwo-marketing-meta/src/index.ts"],
-      "@/marketing/meta-lib": ["packages/ninetwo-marketing-meta/src/index.ts"],
-      "@/marketing/ui": ["packages/ninetwo-marketing-ui/src/index.ts"],
-      "@/marketing/ui-lib": ["packages/ninetwo-marketing-ui/src/index.ts"],
-      "@/ninetwo-cli/*": ["packages/ninetwo-cli/src/*"],
-      "@/ninetwo-e2e-testing/*": ["packages/ninetwo-e2e-testing/src/*"],
-      "@/ninetwo-front/*": ["packages/ninetwo-front/src/*"],
-      "@/ninetwo-server/*": ["packages/ninetwo-server/src/*"],
-      "@/ninetwo-utils/*": ["packages/ninetwo-utils/src/*"],
-      "@/ninetwo-website/*": ["packages/ninetwo-website/src/*"],
-      "@/ninetwo-zapier/*": ["packages/ninetwo-zapier/src/*"],
-      "ninetwo-emails": ["packages/ninetwo-emails/src/*"],
-      "ninetwo-marketing-core": ["packages/ninetwo-marketing-core/src/*"],
-      "ninetwo-marketing-google": ["packages/ninetwo-marketing-google/src/*"],
-      "ninetwo-marketing-meta": [
-        "packages/ninetwo-marketing-meta/src/index.ts"
-      ],
-      "ninetwo-marketing-ui": ["packages/ninetwo-marketing-ui/src/*"],
-      "ninetwo-sdk": ["packages/ninetwo-sdk/src/*"],
-      "ninetwo-shared": ["packages/ninetwo-shared/src/*"],
-      "ninetwo-ui": ["packages/ninetwo-ui/src/*"]
-    }
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "tmp"]
 }

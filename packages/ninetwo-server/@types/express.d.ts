@@ -1,4 +1,4 @@
-import { type APP_LOCALES } from 'twenty-shared/translations';
+import { type APP_LOCALES } from 'ninetwo-shared/translations';
 
 import { type ApiKey } from 'src/engine/core-modules/api-key/api-key.entity';
 import { type AuthContext } from 'src/engine/core-modules/auth/types/auth-context.type';

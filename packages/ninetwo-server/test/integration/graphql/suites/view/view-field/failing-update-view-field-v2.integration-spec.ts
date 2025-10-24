@@ -9,7 +9,7 @@ import { extractRecordIdsAndDatesAsExpectAny } from 'test/utils/extract-record-i
 import {
   eachTestingContextFilter,
   type EachTestingContext,
-} from 'twenty-shared/testing';
+} from 'ninetwo-shared/testing';
 
 import { type UpdateViewFieldInput } from 'src/engine/metadata-modules/view-field/dtos/inputs/update-view-field.input';
 

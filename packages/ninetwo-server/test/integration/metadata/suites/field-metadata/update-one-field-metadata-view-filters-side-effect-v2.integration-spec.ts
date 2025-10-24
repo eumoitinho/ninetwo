@@ -11,13 +11,13 @@ import { findViewFilterWithRestApi } from 'test/integration/rest/utils/view-rest
 import {
   eachTestingContextFilter,
   type EachTestingContext,
-} from 'twenty-shared/testing';
+} from 'ninetwo-shared/testing';
 import {
   FieldMetadataType,
   ViewFilterOperand,
   type EnumFieldMetadataType,
-} from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
+} from 'ninetwo-shared/types';
+import { isDefined } from 'ninetwo-shared/utils';
 
 import {
   type FieldMetadataComplexOption,

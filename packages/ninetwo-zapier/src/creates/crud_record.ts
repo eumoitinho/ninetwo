@@ -6,7 +6,7 @@ import { InputData } from '../utils/data.types';
 import handleQueryParams from '../utils/handleQueryParams';
 import requestDb, { requestSchema } from '../utils/requestDb';
 import { DatabaseEventAction } from '../utils/triggers/triggers.utils';
-import { capitalize } from 'twenty-shared/utils';
+import { capitalize } from 'ninetwo-shared/utils';
 
 export const recordInputFields = async (
   z: ZObject,

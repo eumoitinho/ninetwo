@@ -24,7 +24,7 @@ import { makeGraphqlAPIRequest } from 'test/integration/graphql/utils/make-graph
 import { performCreateManyOperation } from 'test/integration/graphql/utils/perform-create-many-operation.utils';
 import { searchFactory } from 'test/integration/graphql/utils/search-factory.util';
 import { deleteAllRecords } from 'test/integration/utils/delete-all-records';
-import { type EachTestingContext } from 'twenty-shared/testing';
+import { type EachTestingContext } from 'ninetwo-shared/testing';
 
 import {
   decodeCursor,
