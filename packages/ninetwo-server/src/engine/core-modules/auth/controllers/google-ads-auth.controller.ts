@@ -116,9 +116,9 @@ export class GoogleAdsAuthController {
 
       return res.redirect(url.toString());
     } catch (error) {
-      const frontBaseUrl = this.twentyConfigService.get('FRONT_BASE_URL');
+      const frontendUrl = this.twentyConfigService.get('FRONTEND_URL');
 
-      return res.redirect(`${frontBaseUrl}/error?message=${error.message}`);
+      return res.redirect(`${frontendUrl}/verify?errorMessage=${encodeURIComponent(error.message)}`);
     }
   }
 }

@@ -48,6 +48,13 @@ export enum SettingsPath {
   IntegrationDatabaseConnection = 'integrations/:databaseKey/:connectionId',
   IntegrationEditDatabaseConnection = 'integrations/:databaseKey/:connectionId/edit',
   IntegrationNewDatabaseConnection = 'integrations/:databaseKey/new',
+  IntegrationsMarketing = 'integrations/marketing',
+  NewMarketingGoogleAds = 'integrations/marketing/google-ads/new',
+  ConfigureMarketingGoogleAds = 'integrations/marketing/google-ads/:marketingChannelId/configure',
+  NewMarketingGoogleAnalytics = 'integrations/marketing/google-analytics/new',
+  ConfigureMarketingGoogleAnalytics = 'integrations/marketing/google-analytics/:marketingChannelId/configure',
+  NewMarketingMetaAds = 'integrations/marketing/meta-ads/new',
+  ConfigureMarketingMetaAds = 'integrations/marketing/meta-ads/:marketingChannelId/configure',
   Security = 'security',
   NewSSOIdentityProvider = 'security/sso/new',
 

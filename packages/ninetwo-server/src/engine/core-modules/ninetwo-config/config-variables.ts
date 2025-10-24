@@ -2,12 +2,12 @@ import { type LogLevel, Logger } from '@nestjs/common';
 
 import { plainToClass } from 'class-transformer';
 import {
-  IsDefined,
-  IsOptional,
-  IsUrl,
-  ValidateIf,
-  type ValidationError,
-  validateSync,
+    IsDefined,
+    IsOptional,
+    IsUrl,
+    ValidateIf,
+    type ValidationError,
+    validateSync,
 } from 'class-validator';
 import { isDefined } from 'ninetwo-shared/utils';
 
@@ -21,7 +21,6 @@ import { ExceptionHandlerDriver } from 'src/engine/core-modules/exception-handle
 import { StorageDriverType } from 'src/engine/core-modules/file-storage/interfaces';
 import { LoggerDriverType } from 'src/engine/core-modules/logger/interfaces';
 import { type MeterDriver } from 'src/engine/core-modules/metrics/types/meter-driver.type';
-import { ServerlessDriverType } from 'src/engine/core-modules/serverless/serverless.interface';
 import { CastToLogLevelArray } from 'src/engine/core-modules/ninetwo-config/decorators/cast-to-log-level-array.decorator';
 import { CastToMeterDriverArray } from 'src/engine/core-modules/ninetwo-config/decorators/cast-to-meter-driver.decorator';
 import { CastToPositiveNumber } from 'src/engine/core-modules/ninetwo-config/decorators/cast-to-positive-number.decorator';
@@ -29,15 +28,16 @@ import { CastToUpperSnakeCase } from 'src/engine/core-modules/ninetwo-config/dec
 import { ConfigVariablesMetadata } from 'src/engine/core-modules/ninetwo-config/decorators/config-variables-metadata.decorator';
 import { IsAWSRegion } from 'src/engine/core-modules/ninetwo-config/decorators/is-aws-region.decorator';
 import { IsDuration } from 'src/engine/core-modules/ninetwo-config/decorators/is-duration.decorator';
+import { IsTwentySemVer } from 'src/engine/core-modules/ninetwo-config/decorators/is-ninetwo-semver.decorator';
 import { IsOptionalOrEmptyString } from 'src/engine/core-modules/ninetwo-config/decorators/is-optional-or-empty-string.decorator';
 import { IsStrictlyLowerThan } from 'src/engine/core-modules/ninetwo-config/decorators/is-strictly-lower-than.decorator';
-import { IsTwentySemVer } from 'src/engine/core-modules/ninetwo-config/decorators/is-ninetwo-semver.decorator';
 import { ConfigVariableType } from 'src/engine/core-modules/ninetwo-config/enums/config-variable-type.enum';
 import { ConfigVariablesGroup } from 'src/engine/core-modules/ninetwo-config/enums/config-variables-group.enum';
 import {
-  ConfigVariableException,
-  ConfigVariableExceptionCode,
+    ConfigVariableException,
+    ConfigVariableExceptionCode,
 } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.exception';
+import { ServerlessDriverType } from 'src/engine/core-modules/serverless/serverless.interface';
 
 export class ConfigVariables {
   @ConfigVariablesMetadata({
@@ -141,6 +141,71 @@ export class ConfigVariables {
     type: ConfigVariableType.BOOLEAN,
   })
   MESSAGING_PROVIDER_GMAIL_ENABLED = false;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: false,
+    description: 'Client ID for Google Ads authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_GOOGLE_ADS_CLIENT_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: true,
+    description: 'Client secret for Google Ads authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_GOOGLE_ADS_CLIENT_SECRET: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: false,
+    description: 'Callback URL for Google Ads authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsUrl({ require_tld: false, require_protocol: true })
+  @IsOptional()
+  AUTH_GOOGLE_ADS_CALLBACK_URL: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: true,
+    description: 'Developer token for Google Ads API access',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  GOOGLE_ADS_DEVELOPER_TOKEN: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: false,
+    description: 'Client ID for Google Analytics authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_GOOGLE_ANALYTICS_CLIENT_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: true,
+    description: 'Client secret for Google Analytics authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_GOOGLE_ANALYTICS_CLIENT_SECRET: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.GOOGLE_AUTH,
+    isSensitive: false,
+    description: 'Callback URL for Google Analytics authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsUrl({ require_tld: false, require_protocol: true })
+  @IsOptional()
+  AUTH_GOOGLE_ANALYTICS_CALLBACK_URL: string;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.OTHER,

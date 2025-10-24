@@ -621,19 +621,23 @@ export const SettingsRoutes = ({ isAdminPageEnabled }: SettingsRoutesProps) => (
           element={<SettingsIntegrationMCP />}
         />
         <Route
-          path="integrations/marketing"
+          path={SettingsPath.IntegrationsMarketing}
           element={<SettingsIntegrationsMarketing />}
         />
         <Route
-          path="integrations/marketing/google-ads/configure"
+          path={SettingsPath.NewMarketingGoogleAds}
           element={<SettingsIntegrationsMarketingGoogleAdsConfigure />}
         />
         <Route
-          path="integrations/marketing/google-analytics/configure"
+          path={SettingsPath.ConfigureMarketingGoogleAds}
+          element={<SettingsIntegrationsMarketingGoogleAdsConfigure />}
+        />
+        <Route
+          path={SettingsPath.NewMarketingGoogleAnalytics}
           element={<SettingsIntegrationsMarketingGoogleAnalyticsConfigure />}
         />
         <Route
-          path="integrations/marketing/google_analytics/configure"
+          path={SettingsPath.ConfigureMarketingGoogleAnalytics}
           element={<SettingsIntegrationsMarketingGoogleAnalyticsConfigure />}
         />
       </Route>

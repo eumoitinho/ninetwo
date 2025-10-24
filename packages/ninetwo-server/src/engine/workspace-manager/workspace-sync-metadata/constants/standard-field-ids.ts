@@ -151,6 +151,7 @@ export const CONNECTED_ACCOUNT_STANDARD_FIELD_IDS = {
   authFailedAt: '20202020-d268-4c6b-baff-400d402b430a',
   messageChannels: '20202020-24f7-4362-8468-042204d1e445',
   calendarChannels: '20202020-af4a-47bb-99ec-51911c1d3977',
+  marketingChannels: '20202020-c5d4-48cc-a0ed-62a2c2e4e688',
   handleAliases: '20202020-8a3d-46be-814f-6228af16c47b',
   scopes: '20202020-8a3d-46be-814f-6228af16c47c',
   connectionParameters: '20202020-a1b2-46be-814f-6228af16c481',
@@ -234,6 +235,20 @@ export const MESSAGE_CHANNEL_MESSAGE_ASSOCIATION_STANDARD_FIELD_IDS = {
   messageExternalId: '20202020-37d6-438f-b6fd-6503596c8f34',
   messageThread: '20202020-fac8-42a8-94dd-44dbc920ae16',
   messageThreadExternalId: '20202020-35fb-421e-afa0-0b8e8f7f9018',
+} as const;
+
+export const MARKETING_CHANNEL_STANDARD_FIELD_IDS = {
+  handle: '20202020-a1f8-4d21-9f32-4e5b6c7d8e9f',
+  connectedAccount: '20202020-b2e9-4e32-8a43-5f6c7d8e9f0a',
+  type: '20202020-c3f0-4f43-9b54-6a7d8e9f0a1b',
+  isSyncEnabled: '20202020-d4a1-4a54-8c65-7b8e9f0a1b2c',
+  syncCursor: '20202020-e5b2-4b65-9d76-8c9f0a1b2c3d',
+  syncStatus: '20202020-f6c3-4c76-0e87-9d0a1b2c3d4e',
+  syncStage: '20202020-a7d4-4d87-1f98-0e1b2c3d4e5f',
+  syncStageStartedAt: '20202020-b8e5-4e98-2a09-1f2c3d4e5f6a',
+  syncedAt: '20202020-c9f6-4f09-3b10-2a3d4e5f6a7b',
+  throttleFailureCount: '20202020-d0a7-4a10-4c21-3b4e5f6a7b8c',
+  accountConfig: '20202020-e1b8-4b21-5d32-4c5f6a7b8c9d',
 } as const;
 
 export const MESSAGE_CHANNEL_STANDARD_FIELD_IDS = {

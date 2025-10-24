@@ -36,6 +36,8 @@ import { loggerModuleFactory } from 'src/engine/core-modules/logger/logger.modul
 import { MessageQueueModule } from 'src/engine/core-modules/message-queue/message-queue.module';
 import { messageQueueModuleFactory } from 'src/engine/core-modules/message-queue/message-queue.module-factory';
 import { TimelineMessagingModule } from 'src/engine/core-modules/messaging/timeline-messaging.module';
+import { NinetwoConfigModule } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.module';
+import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.service';
 import { OpenApiModule } from 'src/engine/core-modules/open-api/open-api.module';
 import { PageLayoutModule } from 'src/engine/core-modules/page-layout/page-layout.module';
 import { PostgresCredentialsModule } from 'src/engine/core-modules/postgres-credentials/postgres-credentials.module';
@@ -47,8 +49,6 @@ import { serverlessModuleFactory } from 'src/engine/core-modules/serverless/serv
 import { ServerlessModule } from 'src/engine/core-modules/serverless/serverless.module';
 import { WorkspaceSSOModule } from 'src/engine/core-modules/sso/sso.module';
 import { TelemetryModule } from 'src/engine/core-modules/telemetry/telemetry.module';
-import { NinetwoConfigModule } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.module';
-import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.service';
 import { UserModule } from 'src/engine/core-modules/user/user.module';
 import { WebhookModule } from 'src/engine/core-modules/webhook/webhook.module';
 import { WorkflowApiModule } from 'src/engine/core-modules/workflow/workflow-api.module';
@@ -60,6 +60,7 @@ import { TrashCleanupModule } from 'src/engine/trash-cleanup/trash-cleanup.modul
 import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/workspace-event-emitter.module';
 import { ChannelSyncModule } from 'src/modules/connected-account/channel-sync/channel-sync.module';
 import { MarketingAdsManagerModule } from 'src/modules/marketing-ads-manager/marketing-ads-manager.module';
+import { MarketingModule } from 'src/modules/marketing/marketing.module';
 
 import { AuditModule } from './audit/audit.module';
 import { ClientConfigModule } from './client-config/client-config.module';
@@ -104,6 +105,7 @@ import { FileModule } from './file/file.module';
     SubscriptionsModule,
     ImapSmtpCaldavModule,
     ChannelSyncModule,
+    MarketingModule,
     MarketingAdsManagerModule,
     FileStorageModule.forRoot(),
     LoggerModule.forRootAsync({

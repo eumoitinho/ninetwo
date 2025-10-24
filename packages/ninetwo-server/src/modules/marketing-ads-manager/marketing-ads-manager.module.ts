@@ -5,6 +5,9 @@ import { WorkspaceDataSourceModule } from 'src/engine/workspace-datasource/works
 import { ConnectedAccountModule } from 'src/modules/connected-account/connected-account.module';
 import { OAuth2ClientManagerModule } from 'src/modules/connected-account/oauth2-client-manager/oauth2-client-manager.module';
 import { RefreshTokensManagerModule } from 'src/modules/connected-account/refresh-tokens-manager/connected-account-refresh-tokens-manager.module';
+import { GoogleAdsAccountService } from 'src/modules/connected-account/services/google-ads-account.service';
+import { GoogleAnalyticsPropertyService } from 'src/modules/connected-account/services/google-analytics-property.service';
+import { MarketingAccountsResolver } from 'src/modules/connected-account/services/marketing-accounts.resolver';
 import { MarketingAdsResolver } from 'src/modules/marketing-ads-manager/resolvers/marketing-ads.resolver';
 import { CampaignManagerService } from 'src/modules/marketing-ads-manager/services/campaign-manager.service';
 import { GoogleAdsSyncService } from 'src/modules/marketing-ads-manager/services/google-ads-sync.service';
@@ -24,13 +27,18 @@ import { MetaAdsSyncService } from 'src/modules/marketing-ads-manager/services/m
     GoogleAnalyticsSyncService,
     MetaAdsSyncService,
     CampaignManagerService,
+    GoogleAdsAccountService,
+    GoogleAnalyticsPropertyService,
     MarketingAdsResolver,
+    MarketingAccountsResolver,
   ],
   exports: [
     GoogleAdsSyncService,
     GoogleAnalyticsSyncService,
     MetaAdsSyncService,
     CampaignManagerService,
+    GoogleAdsAccountService,
+    GoogleAnalyticsPropertyService,
   ],
 })
 export class MarketingAdsManagerModule {}

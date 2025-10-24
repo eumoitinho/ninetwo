@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { GOOGLE_ADS_SCOPES, GOOGLE_ANALYTICS_SCOPES, META_ADS_SCOPES } from 'ninetwo-marketing-core';
+
 import { NinetwoORMGlobalManager } from 'src/engine/ninetwo-orm/ninetwo-orm-global.manager';
 import { ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
 
@@ -30,6 +32,9 @@ export class MarketingAuthService {
         'connectedAccount',
       );
 
+    // Get scopes based on provider
+    const scopes = this.getScopesForProvider(provider);
+
     // Check if account already exists
     const existingAccount = await connectedAccountRepository.findOne({
       where: {
@@ -40,13 +45,15 @@ export class MarketingAuthService {
     });
 
     if (existingAccount) {
-      // Update tokens
+      // Update tokens and scopes
       await connectedAccountRepository.update(
         { id: existingAccount.id },
         {
           accessToken,
           refreshToken: refreshToken || existingAccount.refreshToken,
           lastSyncHistoryId: '',
+          scopes,
+          authFailedAt: null,
         },
       );
 
@@ -61,6 +68,7 @@ export class MarketingAuthService {
       accessToken,
       refreshToken: refreshToken || null,
       lastSyncHistoryId: '',
+      scopes,
       syncConfig: {
         enabled: false, // User needs to configure which accounts to sync
       },
@@ -68,5 +76,21 @@ export class MarketingAuthService {
 
     return newAccount.id;
   }
+
+  private getScopesForProvider(
+    provider: 'google-ads' | 'google-analytics' | 'meta-ads',
+  ): string[] {
+    switch (provider) {
+      case 'google-ads':
+        return [...GOOGLE_ADS_SCOPES, 'email', 'profile'];
+      case 'google-analytics':
+        return [...GOOGLE_ANALYTICS_SCOPES, 'email', 'profile'];
+      case 'meta-ads':
+        return [...META_ADS_SCOPES];
+      default:
+        return [];
+    }
+  }
 }
+
 

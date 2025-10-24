@@ -164,4 +164,15 @@ export class ConnectedAccountWorkspaceEntity extends BaseWorkspaceEntity {
     onDelete: RelationOnDeleteAction.CASCADE,
   })
   calendarChannels: Relation<CalendarChannelWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: CONNECTED_ACCOUNT_STANDARD_FIELD_IDS.marketingChannels,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Marketing Channels`,
+    description: msg`Marketing Channels`,
+    icon: 'IconBrandGoogle',
+    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity').MarketingChannelWorkspaceEntity,
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  marketingChannels: Relation<any[]>;
 }
