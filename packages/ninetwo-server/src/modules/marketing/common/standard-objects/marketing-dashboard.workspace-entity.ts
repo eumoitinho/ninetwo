@@ -19,7 +19,6 @@ import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync
   icon: STANDARD_OBJECT_ICONS.marketingDashboard,
   labelIdentifierStandardId: MARKETING_DASHBOARD_STANDARD_FIELD_IDS.name,
 })
-@WorkspaceIsSystem()
 export class MarketingDashboardWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceField({
     standardId: MARKETING_DASHBOARD_STANDARD_FIELD_IDS.name,

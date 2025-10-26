@@ -70,7 +70,6 @@ registerEnumType(MarketingChannelType, {
   labelIdentifierStandardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.handle,
 })
 @WorkspaceIsNotAuditLogged()
-@WorkspaceIsSystem()
 export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceField({
     standardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.handle,

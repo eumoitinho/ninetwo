@@ -1698,11 +1698,23 @@ export type MarketingCampaignDto = {
   __typename?: 'MarketingCampaignDto';
   budget?: Maybe<Scalars['Float']>;
   budgetType?: Maybe<Scalars['String']>;
+  clicks?: Maybe<Scalars['Float']>;
+  connectedAccountId?: Maybe<Scalars['String']>;
+  conversionValue?: Maybe<Scalars['Float']>;
+  conversions?: Maybe<Scalars['Float']>;
+  cost?: Maybe<Scalars['Float']>;
+  currencyCode?: Maybe<Scalars['String']>;
+  customerId?: Maybe<Scalars['String']>;
+  dailyBudget?: Maybe<Scalars['Float']>;
   endDate?: Maybe<Scalars['String']>;
+  externalId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  impressions?: Maybe<Scalars['Float']>;
   name: Scalars['String'];
+  platform?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
   status: Scalars['String'];
+  totalBudget?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
 };
 

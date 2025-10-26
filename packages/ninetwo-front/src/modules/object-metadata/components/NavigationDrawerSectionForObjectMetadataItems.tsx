@@ -15,7 +15,9 @@ const ORDERED_STANDARD_OBJECTS: string[] = [
   CoreObjectNameSingular.Opportunity,
   CoreObjectNameSingular.Task,
   CoreObjectNameSingular.Note,
+  CoreObjectNameSingular.MarketingDashboard,
   CoreObjectNameSingular.AdsCampaign,
+  CoreObjectNameSingular.AnalyticsData,
 ];
 
 type NavigationDrawerSectionForObjectMetadataItemsProps = {
@@ -34,6 +36,18 @@ export const NavigationDrawerSectionForObjectMetadataItems = ({
   const isNavigationSectionOpen = useRecoilValue(isNavigationSectionOpenState);
 
   const { objectPermissionsByObjectMetadataId } = useObjectPermissions();
+
+  // Debug: log marketing objects
+  const marketingObjects = objectMetadataItems.filter(item =>
+    ['adsCampaign', 'analyticsData', 'marketingDashboard'].includes(item.nameSingular)
+  );
+  if (marketingObjects.length > 0) {
+    console.log('🔍 Marketing objects found:', marketingObjects.map(o => ({
+      name: o.nameSingular,
+      isSystem: o.isSystem,
+      isActive: o.isActive
+    })));
+  }
 
   const sortedStandardObjectMetadataItems = [...objectMetadataItems]
     .filter((item) => ORDERED_STANDARD_OBJECTS.includes(item.nameSingular))

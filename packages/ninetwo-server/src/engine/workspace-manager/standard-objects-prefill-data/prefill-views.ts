@@ -5,9 +5,11 @@ import { FeatureFlagKey } from 'src/engine/core-modules/feature-flag/enums/featu
 import { type ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { type ViewDefinition } from 'src/engine/workspace-manager/standard-objects-prefill-data/types/view-definition.interface';
 import { adsCampaignsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/ads-campaigns-all.view';
+import { analyticsDataAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/analytics-data-all.view';
 import { companiesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/companies-all.view';
 import { customAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/custom-all.view';
 import { dashboardsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/dashboards-all.view';
+import { marketingDashboardsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/marketing-dashboards-all.view';
 import { notesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/notes-all.view';
 import { opportunitiesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/opportunities-all.view';
 import { opportunitiesByStageView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/opportunity-by-stage.view';
@@ -34,6 +36,8 @@ export const prefillViews = async (
   );
 
   const adsCampaignsView = adsCampaignsAllView(objectMetadataItems);
+  const analyticsDataView = analyticsDataAllView(objectMetadataItems);
+  const marketingDashboardsView = marketingDashboardsAllView(objectMetadataItems);
 
   const views = [
     companiesAllView(objectMetadataItems),
@@ -47,7 +51,9 @@ export const prefillViews = async (
     workflowsAllView(objectMetadataItems),
     workflowVersionsAllView(objectMetadataItems),
     workflowRunsAllView(objectMetadataItems),
+    ...(marketingDashboardsView ? [marketingDashboardsView] : []),
     ...(adsCampaignsView ? [adsCampaignsView] : []),
+    ...(analyticsDataView ? [analyticsDataView] : []),
     ...customViews,
   ];
 
