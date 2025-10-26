@@ -194,6 +194,7 @@ export const TIMELINE_ACTIVITY_STANDARD_FIELD_IDS = {
   person: '20202020-c414-45b9-a60a-ac27aa96229f',
   company: '20202020-04ad-4221-a744-7a8278a5ce21',
   opportunity: '20202020-7664-4a35-a3df-580d389fd527',
+  adsCampaign: '20202020-ac01-4d5f-b3e2-7f8a9c2e1b4d',
   task: '20202020-b2f5-415c-9135-a31dfe49501b',
   note: '20202020-ec55-4135-8da5-3a20badc0156',
   workflow: '20202020-616c-4ad3-a2e9-c477c341e295',
@@ -257,6 +258,9 @@ export const ADS_CAMPAIGN_STANDARD_FIELD_IDS = {
   endDate: '20202020-e7f8-4a87-5b98-1c2d3e4f5a6b',
   lastSyncedAt: '20202020-f8a9-4b98-6c09-2d3e4f5a6b7c',
   marketingChannel: '20202020-a9b0-4c09-7d10-3e4f5a6b7c8d',
+  timelineActivities: '20202020-b0c1-4d10-8e21-4f5a6b7c8d9e',
+  analyticsData: '20202020-c1d2-4e21-9f32-5a6b7c8d9e0f',
+  persons: '20202020-d2e3-4f32-0a43-6b7c8d9e0f1a',
 } as const;
 
 export const ANALYTICS_DATA_STANDARD_FIELD_IDS = {
@@ -283,6 +287,7 @@ export const ANALYTICS_DATA_STANDARD_FIELD_IDS = {
   country: '20202020-d0e1-4f10-8a21-4b5c6d7e8f9a',
   city: '20202020-e1f2-4a21-9b32-5c6d7e8f9a0b',
   landingPage: '20202020-f2a3-4b32-0c43-6d7e8f9a0b1c',
+  linkedCampaign: '20202020-a4b5-4d43-1e54-8f9a0b1c2d3e',
   marketingChannel: '20202020-a3b4-4c43-1d54-7e8f9a0b1c2d',
 } as const;
 
@@ -439,6 +444,7 @@ export const PERSON_STANDARD_FIELD_IDS = {
   calendarEventParticipants: '20202020-52ee-45e9-a702-b64b3753e3a9',
   timelineActivities: '20202020-a43e-4873-9c23-e522de906ce5',
   searchVector: '57d1d7ad-fa10-44fc-82f3-ad0959ec2534',
+  sourceCampaign: '20202020-d5e6-4f76-5a87-9f0a1b2c3d4e',
 } as const;
 
 export const TASK_STANDARD_FIELD_IDS = {

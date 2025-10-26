@@ -12,6 +12,7 @@ export const GET_MARKETING_AD_ACCOUNTS = gql`
         timezone
       }
       managerAccountId
+      selectedAccounts
     }
   }
 `;

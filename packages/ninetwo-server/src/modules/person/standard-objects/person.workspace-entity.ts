@@ -36,6 +36,7 @@ import { AttachmentWorkspaceEntity } from 'src/modules/attachment/standard-objec
 import { CalendarEventParticipantWorkspaceEntity } from 'src/modules/calendar/common/standard-objects/calendar-event-participant.workspace-entity';
 import { CompanyWorkspaceEntity } from 'src/modules/company/standard-objects/company.workspace-entity';
 import { FavoriteWorkspaceEntity } from 'src/modules/favorite/standard-objects/favorite.workspace-entity';
+import { AdsCampaignWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity';
 import { MessageParticipantWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-participant.workspace-entity';
 import { NoteTargetWorkspaceEntity } from 'src/modules/note/standard-objects/note-target.workspace-entity';
 import { OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-objects/opportunity.workspace-entity';
@@ -296,6 +297,22 @@ export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceIsNullable()
   @WorkspaceIsSystem()
   timelineActivities: Relation<TimelineActivityWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: PERSON_STANDARD_FIELD_IDS.sourceCampaign,
+    type: RelationType.MANY_TO_ONE,
+    label: msg`Source Campaign`,
+    description: msg`Marketing campaign that brought this contact`,
+    icon: 'IconTargetArrow',
+    inverseSideTarget: () => AdsCampaignWorkspaceEntity,
+    inverseSideFieldKey: 'persons',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  sourceCampaign: Relation<AdsCampaignWorkspaceEntity> | null;
+
+  @WorkspaceJoinColumn('sourceCampaign')
+  sourceCampaignId: string | null;
 
   @WorkspaceField({
     standardId: PERSON_STANDARD_FIELD_IDS.searchVector,

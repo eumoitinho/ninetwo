@@ -8,4 +8,3 @@ export class MarketingChannelConfigSuccessDTO {
   @Field(() => String)
   marketingChannelId: string;
 }
-

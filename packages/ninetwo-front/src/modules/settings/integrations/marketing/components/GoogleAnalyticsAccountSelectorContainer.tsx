@@ -31,6 +31,11 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
 
   const { data, loading, error } = useQuery(GET_MARKETING_ANALYTICS_ACCOUNTS, {
     variables: { connectedAccountId },
+    onCompleted: (queryData) => {
+      // Inicializar com propriedades já selecionadas
+      const selected = queryData?.getMarketingAnalyticsAccounts?.selectedAccounts || [];
+      setSelectedAccountIds(selected);
+    },
   });
 
   const [configureAccounts, { loading: configuring }] = useMutation(

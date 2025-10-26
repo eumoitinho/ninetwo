@@ -31,6 +31,11 @@ export const GoogleAdsAccountSelectorContainer = ({
 
   const { data, loading, error } = useQuery(GET_MARKETING_AD_ACCOUNTS, {
     variables: { connectedAccountId },
+    onCompleted: (queryData) => {
+      // Inicializar com contas já selecionadas
+      const selected = queryData?.getMarketingAdAccounts?.selectedAccounts || [];
+      setSelectedAccountIds(selected);
+    },
   });
 
   const [configureAccounts, { loading: configuring }] = useMutation(
@@ -59,7 +64,7 @@ export const GoogleAdsAccountSelectorContainer = ({
       variables: {
         connectedAccountId,
         customerIds: selectedAccountIds,
-        managerCustomerId: data?.getMarketingAdAccounts?.managerCustomerId,
+        managerCustomerId: data?.getMarketingAdAccounts?.managerAccountId,
       },
     });
   };
@@ -81,7 +86,7 @@ export const GoogleAdsAccountSelectorContainer = ({
   }
 
   const accounts: AdAccount[] = data?.getMarketingAdAccounts?.accounts || [];
-  const managerAccountId = data?.getMarketingAdAccounts?.managerCustomerId;
+  const managerAccountId = data?.getMarketingAdAccounts?.managerAccountId;
 
   if (accounts.length === 0) {
     return (

@@ -15,6 +15,7 @@ import { WorkspaceRelation } from 'src/engine/ninetwo-orm/decorators/workspace-r
 import { ANALYTICS_DATA_STANDARD_FIELD_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-field-ids';
 import { STANDARD_OBJECT_ICONS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-icons';
 import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-ids';
+import { AdsCampaignWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity';
 import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 
 @WorkspaceEntity({
@@ -25,7 +26,6 @@ import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/st
   description: msg`Google Analytics 4 Data`,
   icon: STANDARD_OBJECT_ICONS.analyticsData,
 })
-@WorkspaceIsSystem()
 export class AnalyticsDataWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceField({
     standardId: ANALYTICS_DATA_STANDARD_FIELD_IDS.date,
@@ -258,6 +258,22 @@ export class AnalyticsDataWorkspaceEntity extends BaseWorkspaceEntity {
   })
   @WorkspaceIsNullable()
   landingPage: string | null;
+
+  @WorkspaceRelation({
+    standardId: ANALYTICS_DATA_STANDARD_FIELD_IDS.linkedCampaign,
+    type: RelationType.MANY_TO_ONE,
+    label: msg`Linked Campaign`,
+    description: msg`Ads campaign linked via UTM`,
+    icon: 'IconTargetArrow',
+    inverseSideTarget: () => AdsCampaignWorkspaceEntity,
+    inverseSideFieldKey: 'analyticsData',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  linkedCampaign: Relation<AdsCampaignWorkspaceEntity> | null;
+
+  @WorkspaceJoinColumn('linkedCampaign')
+  linkedCampaignId: string | null;
 
   @WorkspaceRelation({
     standardId: ANALYTICS_DATA_STANDARD_FIELD_IDS.marketingChannel,

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_MARKETING_ANALYTICS_ACCOUNTS = gql`
-  query GetMarketingAnalyticsAccounts($connectedAccountId: ID!) {
+  query GetMarketingAnalyticsAccounts($connectedAccountId: UUID!) {
     getMarketingAnalyticsAccounts(connectedAccountId: $connectedAccountId) {
       accounts {
         id
@@ -9,6 +9,7 @@ export const GET_MARKETING_ANALYTICS_ACCOUNTS = gql`
         type
         platform
       }
+      selectedAccounts
     }
   }
 `;

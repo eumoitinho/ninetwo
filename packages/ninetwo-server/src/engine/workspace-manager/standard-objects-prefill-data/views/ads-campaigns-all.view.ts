@@ -43,7 +43,7 @@ export const adsCampaignsAllView = (
         fieldMetadataId:
           adsCampaignObjectMetadata.fields.find(
             (field) =>
-              field.standardId === ADS_CAMPAIGN_STANDARD_FIELD_IDS.platform,
+              field.standardId === ADS_CAMPAIGN_STANDARD_FIELD_IDS.status,
           )?.id ?? '',
         position: 1,
         isVisible: true,

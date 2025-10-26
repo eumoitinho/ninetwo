@@ -26,20 +26,22 @@ export type ActivateWorkspaceInput = {
   displayName?: InputMaybe<Scalars['String']>;
 };
 
-export type AdAccount = {
-  __typename?: 'AdAccount';
-  currencyCode: Scalars['String'];
+export type AdAccountDto = {
+  __typename?: 'AdAccountDto';
+  currencyCode?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
-  platform: Scalars['String'];
+  platform?: Maybe<Scalars['String']>;
   timezone?: Maybe<Scalars['String']>;
-  type: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
 };
 
-export type AdAccountsResult = {
-  __typename?: 'AdAccountsResult';
-  accounts: Array<AdAccount>;
+export type AdAccountsResultDto = {
+  __typename?: 'AdAccountsResultDto';
+  accounts: Array<AdAccountDto>;
   managerAccountId?: Maybe<Scalars['String']>;
+  managerCustomerId?: Maybe<Scalars['String']>;
+  selectedAccounts: Array<Scalars['String']>;
 };
 
 export type AdminPanelHealthServiceData = {
@@ -1028,8 +1030,8 @@ export type DateFilter = {
 };
 
 export type DateRangeInput = {
-  from: Scalars['String'];
-  to: Scalars['String'];
+  endDate: Scalars['String'];
+  startDate: Scalars['String'];
 };
 
 export type DeleteApprovedAccessDomainInput = {
@@ -1692,17 +1694,16 @@ export type LoginToken = {
   loginToken: AuthToken;
 };
 
-export type MarketingCampaign = {
-  __typename?: 'MarketingCampaign';
-  connectedAccountId: Scalars['String'];
-  currencyCode: Scalars['String'];
-  dailyBudget?: Maybe<Scalars['Float']>;
-  externalId: Scalars['String'];
+export type MarketingCampaignDto = {
+  __typename?: 'MarketingCampaignDto';
+  budget?: Maybe<Scalars['Float']>;
+  budgetType?: Maybe<Scalars['String']>;
+  endDate?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
-  platform: Scalars['String'];
+  startDate?: Maybe<Scalars['String']>;
   status: Scalars['String'];
-  totalBudget?: Maybe<Scalars['Float']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type MarketingChannelConfigSuccess = {
@@ -1711,30 +1712,18 @@ export type MarketingChannelConfigSuccess = {
   success: Scalars['Boolean'];
 };
 
-export type MarketingMetric = {
-  __typename?: 'MarketingMetric';
-  adNetworkType?: Maybe<Scalars['String']>;
-  allConversions?: Maybe<Scalars['Float']>;
-  allConversionsValue?: Maybe<Scalars['Float']>;
+export type MarketingMetricDto = {
+  __typename?: 'MarketingMetricDto';
   campaignId: Scalars['String'];
+  campaignName: Scalars['String'];
   clicks: Scalars['Float'];
-  conversionRate?: Maybe<Scalars['Float']>;
   conversions: Scalars['Float'];
-  conversionsValue?: Maybe<Scalars['Float']>;
-  cost: MoneyAmount;
-  cpa?: Maybe<MoneyAmount>;
-  cpc?: Maybe<MoneyAmount>;
+  cost: Scalars['Float'];
+  cpc?: Maybe<Scalars['Float']>;
   cpm?: Maybe<Scalars['Float']>;
   ctr?: Maybe<Scalars['Float']>;
-  currencyCode: Scalars['String'];
-  date: Scalars['DateTime'];
-  device?: Maybe<Scalars['String']>;
+  date: Scalars['String'];
   impressions: Scalars['Float'];
-  interactions?: Maybe<Scalars['Float']>;
-  label: Scalars['String'];
-  platform: Scalars['String'];
-  roas?: Maybe<Scalars['Float']>;
-  viewThroughConversions?: Maybe<Scalars['Float']>;
 };
 
 export enum MessageChannelVisibility {
@@ -1750,12 +1739,6 @@ export enum ModelProvider {
   OPENAI_COMPATIBLE = 'OPENAI_COMPATIBLE',
   XAI = 'XAI'
 }
-
-export type MoneyAmount = {
-  __typename?: 'MoneyAmount';
-  amountMicros: Scalars['Float'];
-  currencyCode: Scalars['String'];
-};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -1896,6 +1879,7 @@ export type Mutation = {
   switchSubscriptionInterval: BillingUpdateOutput;
   syncApplication: Scalars['Boolean'];
   trackAnalytics: Analytics;
+  triggerMarketingChannelSync: Scalars['Boolean'];
   updateApiKey?: Maybe<ApiKey>;
   updateCoreView: CoreView;
   updateCoreViewField: CoreViewField;
@@ -2602,6 +2586,11 @@ export type MutationTrackAnalyticsArgs = {
 };
 
 
+export type MutationTriggerMarketingChannelSyncArgs = {
+  marketingChannelId: Scalars['UUID'];
+};
+
+
 export type MutationUpdateApiKeyArgs = {
   input: UpdateApiKeyDto;
 };
@@ -3196,15 +3185,12 @@ export type Query = {
   getCoreViews: Array<CoreView>;
   getDatabaseConfigVariable: ConfigVariable;
   getEmailingDomains: Array<EmailingDomain>;
-  getGoogleAdsAccounts: Scalars['String'];
-  getGoogleAdsMCCChildAccounts: Scalars['String'];
-  getGoogleAnalyticsProperties: Scalars['String'];
   getIndicatorHealthStatus: AdminPanelHealthServiceData;
-  getMarketingAdAccounts: AdAccountsResult;
-  getMarketingAnalyticsAccounts: AdAccountsResult;
-  getMarketingCampaigns: Array<MarketingCampaign>;
+  getMarketingAdAccounts: AdAccountsResultDto;
+  getMarketingAnalyticsAccounts: AdAccountsResultDto;
+  getMarketingCampaigns: Array<MarketingCampaignDto>;
   getMarketingChannel: Scalars['String'];
-  getMarketingMetrics: Array<MarketingMetric>;
+  getMarketingMetrics: Array<MarketingMetricDto>;
   getMeteredProductsUsage: Array<BillingMeteredProductUsageOutput>;
   getPageLayout?: Maybe<PageLayout>;
   getPageLayoutTab: PageLayoutTab;
@@ -3406,22 +3392,6 @@ export type QueryGetCoreViewsArgs = {
 
 export type QueryGetDatabaseConfigVariableArgs = {
   key: Scalars['String'];
-};
-
-
-export type QueryGetGoogleAdsAccountsArgs = {
-  connectedAccountId: Scalars['UUID'];
-};
-
-
-export type QueryGetGoogleAdsMccChildAccountsArgs = {
-  connectedAccountId: Scalars['UUID'];
-  mccCustomerId: Scalars['String'];
-};
-
-
-export type QueryGetGoogleAnalyticsPropertiesArgs = {
-  connectedAccountId: Scalars['UUID'];
 };
 
 

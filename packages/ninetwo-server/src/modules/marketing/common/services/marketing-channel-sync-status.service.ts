@@ -20,6 +20,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -35,6 +36,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -50,6 +52,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -68,6 +71,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -82,6 +86,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -96,6 +101,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -112,6 +118,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -128,6 +135,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -141,6 +149,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {
@@ -156,6 +165,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     const existingMarketingChannel =
@@ -175,6 +185,7 @@ export class MarketingChannelSyncStatusService {
     const marketingChannelRepository =
       await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
         'marketingChannel',
+        { shouldBypassPermissionChecks: true },
       );
 
     await marketingChannelRepository.update(marketingChannelId, {

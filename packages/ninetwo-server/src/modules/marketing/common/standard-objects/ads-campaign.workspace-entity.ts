@@ -15,7 +15,10 @@ import { WorkspaceRelation } from 'src/engine/ninetwo-orm/decorators/workspace-r
 import { ADS_CAMPAIGN_STANDARD_FIELD_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-field-ids';
 import { STANDARD_OBJECT_ICONS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-icons';
 import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-ids';
+import { AnalyticsDataWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/analytics-data.workspace-entity';
 import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
+import { PersonWorkspaceEntity } from 'src/modules/person/standard-objects/person.workspace-entity';
+import { TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 
 @WorkspaceEntity({
   standardId: STANDARD_OBJECT_IDS.adsCampaign,
@@ -202,6 +205,44 @@ export class AdsCampaignWorkspaceEntity extends BaseWorkspaceEntity {
   })
   @WorkspaceIsNullable()
   lastSyncedAt: Date | null;
+
+  @WorkspaceRelation({
+    standardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.timelineActivities,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Timeline Activities`,
+    description: msg`Events linked to this campaign`,
+    icon: 'IconTimeline',
+    inverseSideTarget: () => TimelineActivityWorkspaceEntity,
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  timelineActivities: Relation<TimelineActivityWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.analyticsData,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Analytics Data`,
+    description: msg`Analytics data linked to this campaign via UTM`,
+    icon: 'IconChartBar',
+    inverseSideTarget: () => AnalyticsDataWorkspaceEntity,
+    inverseSideFieldKey: 'linkedCampaign',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  analyticsData: Relation<AnalyticsDataWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.persons,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Persons`,
+    description: msg`Contacts acquired through this campaign`,
+    icon: 'IconUsers',
+    inverseSideTarget: () => PersonWorkspaceEntity,
+    inverseSideFieldKey: 'sourceCampaign',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  persons: Relation<PersonWorkspaceEntity[]>;
 
   @WorkspaceRelation({
     standardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.marketingChannel,

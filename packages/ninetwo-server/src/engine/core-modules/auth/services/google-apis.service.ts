@@ -100,7 +100,7 @@ export class GoogleAPIsService {
       const existingAdsChannel = await marketingChannelRepository.findOne({
         where: {
           connectedAccountId,
-          type: MarketingChannelType.GOOGLE_ADS as any,
+          type: MarketingChannelType.GOOGLE_ADS,
         },
       });
 
@@ -109,9 +109,9 @@ export class GoogleAPIsService {
           id: v4(),
           connectedAccountId,
           handle,
-          type: MarketingChannelType.GOOGLE_ADS as any,
-          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED as any,
-          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING as any,
+          type: MarketingChannelType.GOOGLE_ADS,
+          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED,
+          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING,
           isSyncEnabled: true,
           throttleFailureCount: 0,
           syncCursor: '',
@@ -125,7 +125,7 @@ export class GoogleAPIsService {
         {
           where: {
             connectedAccountId,
-            type: MarketingChannelType.GOOGLE_ANALYTICS as any,
+            type: MarketingChannelType.GOOGLE_ANALYTICS,
           },
         },
       );
@@ -135,9 +135,9 @@ export class GoogleAPIsService {
           id: v4(),
           connectedAccountId,
           handle,
-          type: MarketingChannelType.GOOGLE_ANALYTICS as any,
-          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED as any,
-          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING as any,
+          type: MarketingChannelType.GOOGLE_ANALYTICS,
+          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED,
+          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING,
           isSyncEnabled: true,
           throttleFailureCount: 0,
           syncCursor: '',

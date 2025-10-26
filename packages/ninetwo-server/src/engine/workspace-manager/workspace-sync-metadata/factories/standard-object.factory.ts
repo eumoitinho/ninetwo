@@ -13,6 +13,8 @@ export class StandardObjectFactory {
     standardObjectMetadataDefinitions: (typeof BaseWorkspaceEntity)[],
     context: WorkspaceSyncContext,
   ): Omit<PartialWorkspaceEntity, 'fields' | 'indexMetadatas'>[] {
+    console.log('[DEBUG] Processing', standardObjectMetadataDefinitions.length, 'standard objects');
+    console.log('[DEBUG] Object names:', standardObjectMetadataDefinitions.map(m => m.name));
     return standardObjectMetadataDefinitions
       .map((metadata) => this.createObjectMetadata(metadata, context))
       .filter((metadata): metadata is PartialWorkspaceEntity => !!metadata);
