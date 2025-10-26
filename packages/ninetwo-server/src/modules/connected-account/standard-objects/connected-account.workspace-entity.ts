@@ -20,6 +20,7 @@ import { CONNECTED_ACCOUNT_STANDARD_FIELD_IDS } from 'src/engine/workspace-manag
 import { STANDARD_OBJECT_ICONS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-icons';
 import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-ids';
 import { CalendarChannelWorkspaceEntity } from 'src/modules/calendar/common/standard-objects/calendar-channel.workspace-entity';
+import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 import { MessageChannelWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-channel.workspace-entity';
 import { WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
 
@@ -165,14 +166,15 @@ export class ConnectedAccountWorkspaceEntity extends BaseWorkspaceEntity {
   })
   calendarChannels: Relation<CalendarChannelWorkspaceEntity[]>;
 
-  @WorkspaceRelation({
-    standardId: CONNECTED_ACCOUNT_STANDARD_FIELD_IDS.marketingChannels,
-    type: RelationType.ONE_TO_MANY,
-    label: msg`Marketing Channels`,
-    description: msg`Marketing Channels`,
-    icon: 'IconBrandGoogle',
-    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity').MarketingChannelWorkspaceEntity,
-    onDelete: RelationOnDeleteAction.CASCADE,
-  })
-  marketingChannels: Relation<any[]>;
+  // TODO: Temporarily commented out to allow MarketingChannel to sync first
+  // @WorkspaceRelation({
+  //   standardId: CONNECTED_ACCOUNT_STANDARD_FIELD_IDS.marketingChannels,
+  //   type: RelationType.ONE_TO_MANY,
+  //   label: msg`Marketing Channels`,
+  //   description: msg`Marketing Channels`,
+  //   icon: 'IconBrandGoogle',
+  //   inverseSideTarget: () => MarketingChannelWorkspaceEntity,
+  //   onDelete: RelationOnDeleteAction.CASCADE,
+  // })
+  // marketingChannels: Relation<MarketingChannelWorkspaceEntity[]>;
 }

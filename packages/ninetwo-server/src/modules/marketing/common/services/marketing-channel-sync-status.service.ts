@@ -1,26 +1,28 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { type WorkspaceRepository } from 'src/engine/ninetwo-orm/repository/workspace.repository';
-import { InjectObjectMetadataRepository } from 'src/engine/object-metadata-repository/object-metadata-repository.decorator';
+import { NinetwoORMManager } from 'src/engine/ninetwo-orm/ninetwo-orm.manager';
 import {
-    MarketingChannelSyncStage,
-    MarketingChannelSyncStatus,
-    type MarketingChannelWorkspaceEntity,
+  MarketingChannelSyncStage,
+  MarketingChannelSyncStatus,
+  type MarketingChannelWorkspaceEntity,
 } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 
 @Injectable()
 export class MarketingChannelSyncStatusService {
   private readonly logger = new Logger(MarketingChannelSyncStatusService.name);
 
-  constructor(
-    @InjectObjectMetadataRepository(MarketingChannelWorkspaceEntity)
-    private readonly marketingChannelRepository: WorkspaceRepository<MarketingChannelWorkspaceEntity>,
-  ) {}
+  constructor(private readonly twentyORMManager: NinetwoORMManager) {}
 
   public async markAsFailedUnknownAndFlushDataFetchPending(
     marketingChannelId: string,
+    workspaceId: string,
   ) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.FAILED_UNKNOWN,
       syncStage: MarketingChannelSyncStage.FAILED,
     });
@@ -28,15 +30,29 @@ export class MarketingChannelSyncStatusService {
 
   public async markAsFailedInsufficientPermissionsAndFlushDataFetchPending(
     marketingChannelId: string,
+    workspaceId: string,
   ) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.FAILED_INSUFFICIENT_PERMISSIONS,
       syncStage: MarketingChannelSyncStage.FAILED,
     });
   }
 
-  public async resetAndScheduleFullDataFetch(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async resetAndScheduleFullDataFetch(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.ONGOING,
       syncStage: MarketingChannelSyncStage.DATA_FETCH_PENDING,
       syncCursor: '',
@@ -45,57 +61,124 @@ export class MarketingChannelSyncStatusService {
     });
   }
 
-  public async scheduleDataFetch(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async scheduleDataFetch(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStage: MarketingChannelSyncStage.DATA_FETCH_SCHEDULED,
     });
   }
 
-  public async scheduleDataImport(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async scheduleDataImport(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStage: MarketingChannelSyncStage.DATA_IMPORT_SCHEDULED,
     });
   }
 
-  public async markAsDataFetchOngoing(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async markAsDataFetchOngoing(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.ONGOING,
       syncStage: MarketingChannelSyncStage.DATA_FETCH_ONGOING,
       syncStageStartedAt: new Date(),
     });
   }
 
-  public async markAsDataImportOngoing(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async markAsDataImportOngoing(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.ONGOING,
       syncStage: MarketingChannelSyncStage.DATA_IMPORT_ONGOING,
       syncStageStartedAt: new Date(),
     });
   }
 
-  public async markAsCompleted(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async markAsCompleted(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       syncStatus: MarketingChannelSyncStatus.ACTIVE,
       syncStage: MarketingChannelSyncStage.DATA_FETCH_PENDING,
       syncedAt: new Date(),
     });
   }
 
-  public async incrementThrottleFailureCount(marketingChannelId: string) {
+  public async markAsFailed(marketingChannelId: string, workspaceId: string) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
+      syncStatus: MarketingChannelSyncStatus.FAILED_UNKNOWN,
+      syncStage: MarketingChannelSyncStage.FAILED,
+    });
+  }
+
+  public async incrementThrottleFailureCount(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
     const existingMarketingChannel =
-      await this.marketingChannelRepository.findOneOrFail({
+      await marketingChannelRepository.findOneOrFail({
         where: { id: marketingChannelId },
       });
 
-    await this.marketingChannelRepository.update(marketingChannelId, {
+    await marketingChannelRepository.update(marketingChannelId, {
       throttleFailureCount: existingMarketingChannel.throttleFailureCount + 1,
     });
   }
 
-  public async resetThrottleFailureCount(marketingChannelId: string) {
-    await this.marketingChannelRepository.update(marketingChannelId, {
+  public async resetThrottleFailureCount(
+    marketingChannelId: string,
+    workspaceId: string,
+  ) {
+    const marketingChannelRepository =
+      await this.twentyORMManager.getRepository<MarketingChannelWorkspaceEntity>(
+        'marketingChannel',
+      );
+
+    await marketingChannelRepository.update(marketingChannelId, {
       throttleFailureCount: 0,
     });
   }
 }
-

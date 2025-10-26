@@ -30,9 +30,9 @@ import { InviteTeam } from '~/pages/onboarding/InviteTeam';
 import { PaymentSuccess } from '~/pages/onboarding/PaymentSuccess';
 import { SyncEmails } from '~/pages/onboarding/SyncEmails';
 
-const MarketingDashboard = lazy(() =>
-  import('~/pages/marketing/MarketingDashboard').then((module) => ({
-    default: module.MarketingDashboard,
+const MarketingHome = lazy(() =>
+  import('~/pages/marketing/MarketingHome').then((module) => ({
+    default: module.MarketingHome,
   })),
 );
 
@@ -69,7 +69,7 @@ export const useCreateAppRouter = (
           />
           <Route path={AppPath.BookCall} element={<BookCall />} />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
-          <Route path="/marketing" element={<MarketingDashboard />} />
+          <Route path={AppPath.Marketing} element={<MarketingHome />} />
           <Route path={AppPath.RecordIndexPage} element={<RecordIndexPage />} />
           <Route path={AppPath.RecordShowPage} element={<RecordShowPage />} />
           <Route

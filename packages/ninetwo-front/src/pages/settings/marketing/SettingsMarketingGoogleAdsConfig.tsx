@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { SettingsMarketingGoogleAdsAccountSelector } from '@/marketing/components/SettingsMarketingGoogleAdsAccountSelector';
+import { useUpdateMarketingChannelAccountConfig } from '@/marketing/hooks/useUpdateMarketingChannelAccountConfig';
 import { type MarketingChannel } from '@/marketing/types/MarketingChannel';
 import { CoreObjectNameSingular } from '@/object-metadata/types/CoreObjectNameSingular';
 import { useFindManyRecords } from '@/object-record/hooks/useFindManyRecords';
@@ -21,6 +22,9 @@ export const SettingsMarketingGoogleAdsConfig = () => {
   const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedAccountIds, setSelectedAccountIds] = useState<string[]>([]);
+
+  const { updateMarketingChannelAccountConfig } =
+    useUpdateMarketingChannelAccountConfig();
 
   const { records: marketingChannels } = useFindManyRecords<MarketingChannel>({
     objectNameSingular: CoreObjectNameSingular.MarketingChannel,
@@ -45,13 +49,10 @@ export const SettingsMarketingGoogleAdsConfig = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Call GraphQL mutation to update marketing channel accountConfig
-      // await updateMarketingChannel({
-      //   variables: {
-      //     id: marketingChannelId,
-      //     accountConfig: { customerIds: selectedAccountIds },
-      //   },
-      // });
+      await updateMarketingChannelAccountConfig({
+        marketingChannelId,
+        accountConfig: { selectedAccounts: selectedAccountIds },
+      });
 
       enqueueSuccessSnackBar({
         message: t`Google Ads account configured successfully. Sync started.`,

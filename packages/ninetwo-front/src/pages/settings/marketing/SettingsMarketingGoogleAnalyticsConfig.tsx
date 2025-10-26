@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { SettingsMarketingGoogleAnalyticsPropertySelector } from '@/marketing/components/SettingsMarketingGoogleAnalyticsPropertySelector';
+import { useUpdateMarketingChannelAccountConfig } from '@/marketing/hooks/useUpdateMarketingChannelAccountConfig';
 import { type MarketingChannel } from '@/marketing/types/MarketingChannel';
 import { CoreObjectNameSingular } from '@/object-metadata/types/CoreObjectNameSingular';
 import { useFindManyRecords } from '@/object-record/hooks/useFindManyRecords';
@@ -21,6 +22,9 @@ export const SettingsMarketingGoogleAnalyticsConfig = () => {
   const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<string>('');
+
+  const { updateMarketingChannelAccountConfig } =
+    useUpdateMarketingChannelAccountConfig();
 
   const { records: marketingChannels } = useFindManyRecords<MarketingChannel>({
     objectNameSingular: CoreObjectNameSingular.MarketingChannel,
@@ -45,13 +49,10 @@ export const SettingsMarketingGoogleAnalyticsConfig = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Call GraphQL mutation to update marketing channel accountConfig
-      // await updateMarketingChannel({
-      //   variables: {
-      //     id: marketingChannelId,
-      //     accountConfig: { propertyId: selectedPropertyId },
-      //   },
-      // });
+      await updateMarketingChannelAccountConfig({
+        marketingChannelId,
+        accountConfig: { propertyId: selectedPropertyId },
+      });
 
       enqueueSuccessSnackBar({
         message: t`Google Analytics property configured successfully. Sync started.`,

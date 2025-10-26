@@ -297,7 +297,11 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
     label: msg`Ads Campaigns`,
     description: msg`Ads Campaigns`,
     icon: 'IconTargetArrow',
-    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity').AdsCampaignWorkspaceEntity,
+    inverseSideTarget: () =>
+      import('src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity').then(
+        (m) => m.AdsCampaignWorkspaceEntity,
+      ),
+    inverseSideFieldKey: 'marketingChannel',
     onDelete: RelationOnDeleteAction.CASCADE,
   })
   adsCampaigns: Relation<any[]>;
@@ -308,7 +312,11 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
     label: msg`Analytics Data`,
     description: msg`Analytics Data`,
     icon: 'IconChartBar',
-    inverseSideTarget: () => typeof import('src/modules/marketing/common/standard-objects/analytics-data.workspace-entity').AnalyticsDataWorkspaceEntity,
+    inverseSideTarget: () =>
+      import('src/modules/marketing/common/standard-objects/analytics-data.workspace-entity').then(
+        (m) => m.AnalyticsDataWorkspaceEntity,
+      ),
+    inverseSideFieldKey: 'marketingChannel',
     onDelete: RelationOnDeleteAction.CASCADE,
   })
   analyticsData: Relation<any[]>;
