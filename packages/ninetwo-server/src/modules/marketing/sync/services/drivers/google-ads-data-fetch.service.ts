@@ -94,8 +94,17 @@ export class GoogleAdsDataFetchService {
         allCampaignsData,
       );
 
+      // Publicar no Kafka para processamento assíncrono e cache no Couchbase
+      for (const campaign of allCampaignsData) {
+        await this.kafkaProducer.sendMarketingCampaign({
+          workspaceId,
+          channelId: marketingChannel.id,
+          campaignData: campaign,
+        });
+      }
+
       this.logger.log(
-        `Successfully fetched and stored ${allCampaignsData.length} campaigns`,
+        `Successfully fetched, stored and published ${allCampaignsData.length} campaigns to Kafka`,
       );
 
       await this.marketingChannelSyncStatusService.markAsCompleted(
