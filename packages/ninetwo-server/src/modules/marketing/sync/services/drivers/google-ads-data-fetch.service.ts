@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { type GoogleAdsApi } from 'google-ads-api';
 
+import { KafkaProducerService } from 'src/engine/integrations/kafka/services/kafka-producer.service';
 import { OAuth2ClientManagerService } from 'src/modules/connected-account/oauth2-client-manager/services/oauth2-client-manager.service';
 import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
 import { MarketingChannelSyncStatusService } from 'src/modules/marketing/common/services/marketing-channel-sync-status.service';
@@ -19,6 +20,7 @@ export class GoogleAdsDataFetchService {
     private readonly oAuth2ClientManagerService: OAuth2ClientManagerService,
     private readonly marketingChannelSyncStatusService: MarketingChannelSyncStatusService,
     private readonly marketingDataStorageService: MarketingDataStorageService,
+    private readonly kafkaProducer: KafkaProducerService,
   ) {}
 
   async fetchCampaigns(
