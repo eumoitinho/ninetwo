@@ -15,6 +15,7 @@ const ORDERED_STANDARD_OBJECTS: string[] = [
   CoreObjectNameSingular.Opportunity,
   CoreObjectNameSingular.Task,
   CoreObjectNameSingular.Note,
+  CoreObjectNameSingular.AdsCampaign,
 ];
 
 type NavigationDrawerSectionForObjectMetadataItemsProps = {

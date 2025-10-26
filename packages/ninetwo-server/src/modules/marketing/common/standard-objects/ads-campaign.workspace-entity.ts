@@ -26,7 +26,6 @@ import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/st
   icon: STANDARD_OBJECT_ICONS.adsCampaign,
   labelIdentifierStandardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.name,
 })
-@WorkspaceIsSystem()
 export class AdsCampaignWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceField({
     standardId: ADS_CAMPAIGN_STANDARD_FIELD_IDS.name,

@@ -16,10 +16,10 @@ import { SubMenuTopBarContainer } from '@/ui/layout/page/components/SubMenuTopBa
 import { ConnectedAccountProvider, SettingsPath } from 'ninetwo-shared/types';
 import { getSettingsPath } from 'ninetwo-shared/utils';
 import {
-  H2Title,
-  IconChartBar,
-  IconChartPie,
-  IconTargetArrow,
+    H2Title,
+    IconChartBar,
+    IconChartPie,
+    IconTargetArrow,
 } from 'ninetwo-ui/display';
 import { Section } from 'ninetwo-ui/layout';
 
