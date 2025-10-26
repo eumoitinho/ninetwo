@@ -7,7 +7,7 @@ import {
   TEST_KEY_NOTIFICATION,
   TEST_KEY_SOFT_DELETION,
   TEST_KEY_STRING_VALUE,
-} from 'test/integration/twenty-config/constants/config-test-keys.constants';
+} from 'test/integration/ninetwo-config/constants/config-test-keys.constants';
 
 import { createConfigVariable } from './utils/create-config-variable.util';
 import { deleteConfigVariable } from './utils/delete-config-variable.util';

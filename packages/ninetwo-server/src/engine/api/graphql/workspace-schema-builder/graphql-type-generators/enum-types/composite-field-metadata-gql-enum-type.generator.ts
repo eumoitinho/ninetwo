@@ -4,15 +4,15 @@ import { GraphQLEnumType } from 'graphql';
 import { type FieldMetadataType } from 'ninetwo-shared/types';
 
 import {
-  type CompositeProperty,
-  type CompositeType,
+    type CompositeProperty,
+    type CompositeType,
 } from 'src/engine/metadata-modules/field-metadata/interfaces/composite-type.interface';
 
 import { GqlTypesStorage } from 'src/engine/api/graphql/workspace-schema-builder/storages/gql-types.storage';
 import { computeCompositeFieldEnumTypeKey } from 'src/engine/api/graphql/workspace-schema-builder/utils/compute-stored-gql-type-key-utils/compute-composite-field-enum-type-key.util';
 import {
-  type FieldMetadataComplexOption,
-  type FieldMetadataDefaultOption,
+    type FieldMetadataComplexOption,
+    type FieldMetadataDefaultOption,
 } from 'src/engine/metadata-modules/field-metadata/dtos/options.input';
 import { isEnumFieldMetadataType } from 'src/engine/metadata-modules/field-metadata/utils/is-enum-field-metadata-type.util';
 import { pascalCase } from 'src/utils/pascal-case';
@@ -72,7 +72,10 @@ export class CompositeFieldMetadataGqlEnumTypeGenerator {
       values: enumOptions.reduce(
         (acc, enumOption) => {
           // Key must match this regex: /^[_A-Za-z][_0-9A-Za-z]+$/
-          acc[enumOption.value] = {
+          // Sanitize key by replacing hyphens with underscores
+          const sanitizedKey = enumOption.value.replace(/-/g, '_');
+
+          acc[sanitizedKey] = {
             value: enumOption.value,
             description: enumOption.label,
           };

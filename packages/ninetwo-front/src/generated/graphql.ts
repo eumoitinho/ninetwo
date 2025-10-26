@@ -36,6 +36,12 @@ export type AdAccount = {
   type: Scalars['String'];
 };
 
+export type AdAccountsResult = {
+  __typename?: 'AdAccountsResult';
+  accounts: Array<AdAccount>;
+  managerAccountId?: Maybe<Scalars['String']>;
+};
+
 export type AdminPanelHealthServiceData = {
   __typename?: 'AdminPanelHealthServiceData';
   description: Scalars['String'];
@@ -588,6 +594,7 @@ export enum ConfigVariablesGroup {
   GOOGLE_AUTH = 'GOOGLE_AUTH',
   LLM = 'LLM',
   LOGGING = 'LOGGING',
+  META_AUTH = 'META_AUTH',
   METERING = 'METERING',
   MICROSOFT_AUTH = 'MICROSOFT_AUTH',
   OTHER = 'OTHER',
@@ -1018,6 +1025,11 @@ export type DateFilter = {
   lt?: InputMaybe<Scalars['Date']>;
   lte?: InputMaybe<Scalars['Date']>;
   neq?: InputMaybe<Scalars['Date']>;
+};
+
+export type DateRangeInput = {
+  from: Scalars['String'];
+  to: Scalars['String'];
 };
 
 export type DeleteApprovedAccessDomainInput = {
@@ -1680,6 +1692,51 @@ export type LoginToken = {
   loginToken: AuthToken;
 };
 
+export type MarketingCampaign = {
+  __typename?: 'MarketingCampaign';
+  connectedAccountId: Scalars['String'];
+  currencyCode: Scalars['String'];
+  dailyBudget?: Maybe<Scalars['Float']>;
+  externalId: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  platform: Scalars['String'];
+  status: Scalars['String'];
+  totalBudget?: Maybe<Scalars['Float']>;
+};
+
+export type MarketingChannelConfigSuccess = {
+  __typename?: 'MarketingChannelConfigSuccess';
+  marketingChannelId: Scalars['String'];
+  success: Scalars['Boolean'];
+};
+
+export type MarketingMetric = {
+  __typename?: 'MarketingMetric';
+  adNetworkType?: Maybe<Scalars['String']>;
+  allConversions?: Maybe<Scalars['Float']>;
+  allConversionsValue?: Maybe<Scalars['Float']>;
+  campaignId: Scalars['String'];
+  clicks: Scalars['Float'];
+  conversionRate?: Maybe<Scalars['Float']>;
+  conversions: Scalars['Float'];
+  conversionsValue?: Maybe<Scalars['Float']>;
+  cost: MoneyAmount;
+  cpa?: Maybe<MoneyAmount>;
+  cpc?: Maybe<MoneyAmount>;
+  cpm?: Maybe<Scalars['Float']>;
+  ctr?: Maybe<Scalars['Float']>;
+  currencyCode: Scalars['String'];
+  date: Scalars['DateTime'];
+  device?: Maybe<Scalars['String']>;
+  impressions: Scalars['Float'];
+  interactions?: Maybe<Scalars['Float']>;
+  label: Scalars['String'];
+  platform: Scalars['String'];
+  roas?: Maybe<Scalars['Float']>;
+  viewThroughConversions?: Maybe<Scalars['Float']>;
+};
+
 export enum MessageChannelVisibility {
   METADATA = 'METADATA',
   SHARE_EVERYTHING = 'SHARE_EVERYTHING',
@@ -1702,6 +1759,7 @@ export type MoneyAmount = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  activateMarketingCampaign: Scalars['Boolean'];
   activateWorkflowVersion: Scalars['Boolean'];
   activateWorkspace: Workspace;
   assignRoleToAgent: Scalars['Boolean'];
@@ -1714,6 +1772,8 @@ export type Mutation = {
   checkPublicDomainValidRecords?: Maybe<DomainValidRecords>;
   checkoutSession: BillingSessionOutput;
   computeStepOutputSchema: Scalars['JSON'];
+  configureMarketingAdAccounts: Scalars['Boolean'];
+  configureMarketingAnalyticsAccounts: Scalars['Boolean'];
   createAgentChatThread: AgentChatThread;
   createAgentHandoff: Scalars['Boolean'];
   createApiKey: ApiKey;
@@ -1808,6 +1868,7 @@ export type Mutation = {
   impersonate: ImpersonateOutput;
   initiateOTPProvisioning: InitiateTwoFactorAuthenticationProvisioningOutput;
   initiateOTPProvisioningForAuthenticatedUser: InitiateTwoFactorAuthenticationProvisioningOutput;
+  pauseMarketingCampaign: Scalars['Boolean'];
   publishServerlessFunction: ServerlessFunction;
   removeAgentHandoff: Scalars['Boolean'];
   removeRoleFromAgent: Scalars['Boolean'];
@@ -1844,6 +1905,7 @@ export type Mutation = {
   updateCoreViewSort: CoreViewSort;
   updateDatabaseConfigVariable: Scalars['Boolean'];
   updateLabPublicFeatureFlag: FeatureFlagDto;
+  updateMarketingChannelAccountConfig: MarketingChannelConfigSuccess;
   updateOneAgent: Agent;
   updateOneApplicationVariable: Scalars['Boolean'];
   updateOneCronTrigger: CronTrigger;
@@ -1876,6 +1938,14 @@ export type Mutation = {
   validateApprovedAccessDomain: ApprovedAccessDomain;
   verifyEmailingDomain: EmailingDomain;
   verifyTwoFactorAuthenticationMethodForAuthenticatedUser: VerifyTwoFactorAuthenticationMethodOutput;
+};
+
+
+export type MutationActivateMarketingCampaignArgs = {
+  campaignId: Scalars['String'];
+  connectedAccountId: Scalars['UUID'];
+  customerId: Scalars['String'];
+  managerCustomerId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1923,6 +1993,19 @@ export type MutationCheckoutSessionArgs = {
 
 export type MutationComputeStepOutputSchemaArgs = {
   input: ComputeStepOutputSchemaInput;
+};
+
+
+export type MutationConfigureMarketingAdAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+  customerIds: Array<Scalars['String']>;
+  managerCustomerId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationConfigureMarketingAnalyticsAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+  propertyIds: Array<Scalars['String']>;
 };
 
 
@@ -2376,6 +2459,14 @@ export type MutationInitiateOtpProvisioningArgs = {
 };
 
 
+export type MutationPauseMarketingCampaignArgs = {
+  campaignId: Scalars['String'];
+  connectedAccountId: Scalars['UUID'];
+  customerId: Scalars['String'];
+  managerCustomerId?: InputMaybe<Scalars['String']>;
+};
+
+
 export type MutationPublishServerlessFunctionArgs = {
   input: PublishServerlessFunctionInput;
 };
@@ -2557,6 +2648,12 @@ export type MutationUpdateDatabaseConfigVariableArgs = {
 
 export type MutationUpdateLabPublicFeatureFlagArgs = {
   input: UpdateLabPublicFeatureFlagInput;
+};
+
+
+export type MutationUpdateMarketingChannelAccountConfigArgs = {
+  accountConfig: Scalars['String'];
+  marketingChannelId: Scalars['UUID'];
 };
 
 
@@ -3099,7 +3196,15 @@ export type Query = {
   getCoreViews: Array<CoreView>;
   getDatabaseConfigVariable: ConfigVariable;
   getEmailingDomains: Array<EmailingDomain>;
+  getGoogleAdsAccounts: Scalars['String'];
+  getGoogleAdsMCCChildAccounts: Scalars['String'];
+  getGoogleAnalyticsProperties: Scalars['String'];
   getIndicatorHealthStatus: AdminPanelHealthServiceData;
+  getMarketingAdAccounts: AdAccountsResult;
+  getMarketingAnalyticsAccounts: AdAccountsResult;
+  getMarketingCampaigns: Array<MarketingCampaign>;
+  getMarketingChannel: Scalars['String'];
+  getMarketingMetrics: Array<MarketingMetric>;
   getMeteredProductsUsage: Array<BillingMeteredProductUsageOutput>;
   getPageLayout?: Maybe<PageLayout>;
   getPageLayoutTab: PageLayoutTab;
@@ -3304,8 +3409,55 @@ export type QueryGetDatabaseConfigVariableArgs = {
 };
 
 
+export type QueryGetGoogleAdsAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+};
+
+
+export type QueryGetGoogleAdsMccChildAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+  mccCustomerId: Scalars['String'];
+};
+
+
+export type QueryGetGoogleAnalyticsPropertiesArgs = {
+  connectedAccountId: Scalars['UUID'];
+};
+
+
 export type QueryGetIndicatorHealthStatusArgs = {
   indicatorId: HealthIndicatorId;
+};
+
+
+export type QueryGetMarketingAdAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+};
+
+
+export type QueryGetMarketingAnalyticsAccountsArgs = {
+  connectedAccountId: Scalars['UUID'];
+};
+
+
+export type QueryGetMarketingCampaignsArgs = {
+  connectedAccountId: Scalars['UUID'];
+  customerId: Scalars['String'];
+  managerCustomerId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetMarketingChannelArgs = {
+  marketingChannelId: Scalars['UUID'];
+};
+
+
+export type QueryGetMarketingMetricsArgs = {
+  campaignIds: Array<Scalars['String']>;
+  connectedAccountId: Scalars['UUID'];
+  customerId: Scalars['String'];
+  dateRange: DateRangeInput;
+  managerCustomerId?: InputMaybe<Scalars['String']>;
 };
 
 

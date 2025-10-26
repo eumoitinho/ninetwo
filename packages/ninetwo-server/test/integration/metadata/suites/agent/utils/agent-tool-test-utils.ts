@@ -23,8 +23,8 @@ import { ObjectMetadataService } from 'src/engine/metadata-modules/object-metada
 import { PermissionsService } from 'src/engine/metadata-modules/permissions/permissions.service';
 import { RoleEntity } from 'src/engine/metadata-modules/role/role.entity';
 import { WorkspacePermissionsCacheService } from 'src/engine/metadata-modules/workspace-permissions-cache/workspace-permissions-cache.service';
-import { ScopedWorkspaceContextFactory } from 'src/engine/twenty-orm/factories/scoped-workspace-context.factory';
-import { TwentyORMGlobalManager } from 'src/engine/twenty-orm/twenty-orm-global.manager';
+import { ScopedWorkspaceContextFactory } from 'src/engine/ninetwo-orm/factories/scoped-workspace-context.factory';
+import { NinetwoORMGlobalManager } from 'src/engine/ninetwo-orm/ninetwo-orm-global.manager';
 import { WorkspaceCacheStorageService } from 'src/engine/workspace-cache-storage/workspace-cache-storage.service';
 import { MessagingSendMessageService } from 'src/modules/messaging/message-import-manager/services/messaging-send-message.service';
 import { WorkflowToolWorkspaceService } from 'src/modules/workflow/workflow-tools/services/workflow-tool.workspace-service';
@@ -37,7 +37,7 @@ export interface AgentToolTestContext {
   objectMetadataService: ObjectMetadataService;
   roleRepository: Repository<RoleEntity>;
   workspacePermissionsCacheService: WorkspacePermissionsCacheService;
-  twentyORMGlobalManager: TwentyORMGlobalManager;
+  twentyORMGlobalManager: NinetwoORMGlobalManager;
   testAgent: AgentEntity & { roleId: string | null };
   testRole: RoleEntity;
   testObjectMetadata: ObjectMetadataEntity;
@@ -76,7 +76,7 @@ export const createAgentToolTestModule =
           },
         },
         {
-          provide: TwentyORMGlobalManager,
+          provide: NinetwoORMGlobalManager,
           useValue: {
             getRepositoryForWorkspace: jest.fn(),
           },
@@ -202,8 +202,8 @@ export const createAgentToolTestModule =
       module.get<WorkspacePermissionsCacheService>(
         WorkspacePermissionsCacheService,
       );
-    const twentyORMGlobalManager = module.get<TwentyORMGlobalManager>(
-      TwentyORMGlobalManager,
+    const twentyORMGlobalManager = module.get<NinetwoORMGlobalManager>(
+      NinetwoORMGlobalManager,
     );
 
     const testAgent: AgentEntity & { roleId: string | null } = {

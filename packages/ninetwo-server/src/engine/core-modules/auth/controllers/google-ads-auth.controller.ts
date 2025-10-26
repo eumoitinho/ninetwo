@@ -19,22 +19,11 @@ import { AuthRestApiExceptionFilter } from 'src/engine/core-modules/auth/filters
 import { GoogleAdsOauthGuard } from 'src/engine/core-modules/auth/guards/google-ads-oauth.guard';
 import { MarketingAuthService } from 'src/engine/core-modules/auth/services/marketing-auth.service';
 import { TransientTokenService } from 'src/engine/core-modules/auth/token/services/transient-token.service';
+import { type GoogleAPIsRequest } from 'src/engine/core-modules/auth/types/google-api-request.type';
 import { WorkspaceDomainsService } from 'src/engine/core-modules/domain/workspace-domains/services/workspace-domains.service';
 import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.service';
 import { Workspace } from 'src/engine/core-modules/workspace/workspace.entity';
 import { PublicEndpointGuard } from 'src/engine/guards/public-endpoint.guard';
-
-type GoogleAdsRequest = {
-  user: {
-    accessToken: string;
-    refreshToken: string;
-    transientToken?: string;
-    emails: Array<{ value: string; verified: boolean }>;
-  };
-  query: {
-    redirect?: string;
-  };
-};
 
 @Controller('auth/google-ads')
 @UseFilters(AuthRestApiExceptionFilter)
@@ -51,18 +40,18 @@ export class GoogleAdsAuthController {
   @Get()
   @UseGuards(GoogleAdsOauthGuard, PublicEndpointGuard)
   async googleAdsAuth() {
-    // Trigger OAuth flow
     return;
   }
 
   @Get('redirect')
   @UseGuards(GoogleAdsOauthGuard, PublicEndpointGuard)
   async googleAdsAuthRedirect(
-    @Req() req: GoogleAdsRequest,
+    @Req() req: GoogleAPIsRequest,
     @Res() res: Response,
   ) {
     try {
-      const { accessToken, refreshToken, transientToken, emails } = req.user;
+      const { user } = req;
+      const { emails, accessToken, refreshToken, transientToken } = user;
 
       if (!transientToken) {
         throw new AuthException(
@@ -93,7 +82,7 @@ export class GoogleAdsAuthController {
       }
 
       const handle =
-        emails.find((email) => email.verified)?.value || emails[0]?.value;
+        emails.find((email: any) => email.verified)?.value || emails[0]?.value;
 
       const connectedAccountId =
         await this.marketingAuthService.saveMarketingConnectedAccount({
@@ -105,21 +94,24 @@ export class GoogleAdsAuthController {
           refreshToken,
         });
 
-      const redirectPath =
-        req.query.redirect ||
+      const redirectLocation =
+        (typeof req.query.redirectLocation === 'string'
+          ? req.query.redirectLocation
+          : undefined) ||
         `/settings/integrations/marketing?connected=google-ads&accountId=${connectedAccountId}`;
 
       const url = this.workspaceDomainsService.buildWorkspaceURL({
         workspace,
-        pathname: redirectPath,
+        pathname: redirectLocation,
       });
 
       return res.redirect(url.toString());
     } catch (error) {
       const frontendUrl = this.twentyConfigService.get('FRONTEND_URL');
 
-      return res.redirect(`${frontendUrl}/verify?errorMessage=${encodeURIComponent(error.message)}`);
+      return res.redirect(
+        `${frontendUrl}/verify?errorMessage=${encodeURIComponent(error.message)}`,
+      );
     }
   }
 }
-

@@ -1,49 +1,41 @@
 import { useCallback } from 'react';
 
+import { useRedirect } from '@/domain-manager/hooks/useRedirect';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
 import { useGenerateTransientTokenMutation } from '~/generated-metadata/graphql';
 
-export type MarketingPlatform = 'google-ads' | 'google-analytics' | 'meta-ads';
-
 export const useMarketingOAuthConnect = () => {
   const [generateTransientToken] = useGenerateTransientTokenMutation();
+  const { redirect } = useRedirect();
 
   const connectPlatform = useCallback(
-    async (platform: MarketingPlatform, redirectPath?: string) => {
-      const baseUrl = REACT_APP_SERVER_BASE_URL;
+    async (endpoint: string, redirectPath?: string) => {
+      const authServerUrl = REACT_APP_SERVER_BASE_URL;
+      const transientToken = await generateTransientToken();
+      const token =
+        transientToken.data?.generateTransientToken.transientToken.token;
 
-      // Generate transient token for OAuth flow
-      const transientTokenResponse = await generateTransientToken();
-      const transientToken =
-        transientTokenResponse.data?.generateTransientToken.transientToken
-          .token;
+      let params = `transientToken=${token}`;
 
-      if (!transientToken) {
-        throw new Error('Failed to generate transient token');
+      if (redirectPath != null) {
+        params += `&redirectLocation=${encodeURIComponent(redirectPath)}`;
       }
 
-      let authUrl = `${baseUrl}/auth/${platform}?transientToken=${transientToken}`;
-
-      if (redirectPath) {
-        authUrl += `&redirect=${encodeURIComponent(redirectPath)}`;
-      }
-
-      // Redirect to OAuth flow
-      window.location.href = authUrl;
+      redirect(`${authServerUrl}/auth/${endpoint}?${params}`);
     },
-    [generateTransientToken],
+    [generateTransientToken, redirect],
   );
 
   const connectGoogleAds = useCallback(
     (redirectPath?: string) => {
-      connectPlatform('google-ads', redirectPath);
+      connectPlatform('google-apis', redirectPath);
     },
     [connectPlatform],
   );
 
   const connectGoogleAnalytics = useCallback(
     (redirectPath?: string) => {
-      connectPlatform('google-analytics', redirectPath);
+      connectPlatform('google-apis', redirectPath);
     },
     [connectPlatform],
   );
@@ -59,6 +51,5 @@ export const useMarketingOAuthConnect = () => {
     connectGoogleAds,
     connectGoogleAnalytics,
     connectMetaAds,
-    connectPlatform,
   };
 };

@@ -6,12 +6,12 @@ import { MessageQueueService } from 'src/engine/core-modules/message-queue/servi
 import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
 import { MarketingChannelSyncStatusService } from 'src/modules/marketing/common/services/marketing-channel-sync-status.service';
 import {
-    MarketingChannelType,
-    type MarketingChannelWorkspaceEntity,
+  MarketingChannelType,
+  type MarketingChannelWorkspaceEntity,
 } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 import {
-    MarketingDataImportJob,
-    type MarketingDataImportJobData,
+  MarketingDataImportJob,
+  type MarketingDataImportJobData,
 } from 'src/modules/marketing/marketing-import-manager/jobs/marketing-data-import.job';
 import { GoogleAdsDataFetchService } from 'src/modules/marketing/marketing-import-manager/services/drivers/google-ads-data-fetch.service';
 import { GoogleAnalyticsDataFetchService } from 'src/modules/marketing/marketing-import-manager/services/drivers/google-analytics-data-fetch.service';
@@ -39,6 +39,7 @@ export class MarketingDataFetchService {
 
     await this.marketingChannelSyncStatusService.markAsDataFetchOngoing(
       marketingChannel.id,
+      workspaceId,
     );
 
     try {
@@ -75,6 +76,7 @@ export class MarketingDataFetchService {
       // Schedule data import after successful fetch
       await this.marketingChannelSyncStatusService.scheduleDataImport(
         marketingChannel.id,
+        workspaceId,
       );
 
       await this.messageQueueService.add<MarketingDataImportJobData>(
@@ -87,6 +89,7 @@ export class MarketingDataFetchService {
 
       await this.marketingChannelSyncStatusService.resetThrottleFailureCount(
         marketingChannel.id,
+        workspaceId,
       );
     } catch (error) {
       this.logger.error(
@@ -96,10 +99,12 @@ export class MarketingDataFetchService {
 
       await this.marketingChannelSyncStatusService.markAsFailedUnknownAndFlushDataFetchPending(
         marketingChannel.id,
+        workspaceId,
       );
 
       await this.marketingChannelSyncStatusService.incrementThrottleFailureCount(
         marketingChannel.id,
+        workspaceId,
       );
 
       throw error;

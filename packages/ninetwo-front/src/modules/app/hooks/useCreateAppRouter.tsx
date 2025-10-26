@@ -1,19 +1,16 @@
-import { lazy } from 'react';
-
 import { AppRouterProviders } from '@/app/components/AppRouterProviders';
 import { SettingsRoutes } from '@/app/components/SettingsRoutes';
 import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect';
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
-import indexAppPath from '@/navigation/utils/indexAppPath';
 import { BlankLayout } from '@/ui/layout/page/components/BlankLayout';
 import { DefaultLayout } from '@/ui/layout/page/components/DefaultLayout';
 import { AppPath } from 'ninetwo-shared/types';
 
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
 } from 'react-router-dom';
 import { Authorize } from '~/pages/auth/Authorize';
 import { PasswordReset } from '~/pages/auth/PasswordReset';
@@ -29,12 +26,6 @@ import { CreateWorkspace } from '~/pages/onboarding/CreateWorkspace';
 import { InviteTeam } from '~/pages/onboarding/InviteTeam';
 import { PaymentSuccess } from '~/pages/onboarding/PaymentSuccess';
 import { SyncEmails } from '~/pages/onboarding/SyncEmails';
-
-const MarketingHome = lazy(() =>
-  import('~/pages/marketing/MarketingHome').then((module) => ({
-    default: module.MarketingHome,
-  })),
-);
 
 export const useCreateAppRouter = (
   isFunctionSettingsEnabled?: boolean,
@@ -68,8 +59,6 @@ export const useCreateAppRouter = (
             element={<BookCallDecision />}
           />
           <Route path={AppPath.BookCall} element={<BookCall />} />
-          <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
-          <Route path={AppPath.Marketing} element={<MarketingHome />} />
           <Route path={AppPath.RecordIndexPage} element={<RecordIndexPage />} />
           <Route path={AppPath.RecordShowPage} element={<RecordShowPage />} />
           <Route

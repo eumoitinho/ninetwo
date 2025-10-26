@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
+import { IconAlertCircle, IconCheck } from 'ninetwo-ui/display';
 
 import { Button } from 'ninetwo-ui/input';
 import { Card } from 'ninetwo-ui/layout';
@@ -122,17 +122,15 @@ export const GoogleAnalyticsAccountSelector = ({
 
   return (
     <StyledContainer>
-      <div>
-        <StyledInfoBox>
-          <IconAlertCircle size={20} />
-          <StyledInfoText>
-            <Trans>
-              Selecione as propriedades Google Analytics que você deseja
-              sincronizar. Os dados serão importados automaticamente.
-            </Trans>
-          </StyledInfoText>
-        </StyledInfoBox>
-      </div>
+      <StyledInfoBox>
+        <IconAlertCircle size={20} />
+        <StyledInfoText>
+          <Trans>
+            Select the Google Analytics properties you want to sync. Data will
+            be imported automatically.
+          </Trans>
+        </StyledInfoText>
+      </StyledInfoBox>
 
       <StyledAccountsGrid>
         {accounts.map((account) => {
@@ -161,12 +159,12 @@ export const GoogleAnalyticsAccountSelector = ({
       <StyledActions>
         <Button
           variant="secondary"
-          title={t`Cancelar`}
+          title={t`Cancel`}
           onClick={onCancel || (() => window.history.back())}
         />
         <Button
           variant="primary"
-          title={t`Confirmar e sincronizar`}
+          title={t`Confirm and sync`}
           onClick={onConfirm}
           disabled={selectedAccountIds.length === 0 || isLoading}
         />
@@ -174,5 +172,3 @@ export const GoogleAnalyticsAccountSelector = ({
     </StyledContainer>
   );
 };
-
-

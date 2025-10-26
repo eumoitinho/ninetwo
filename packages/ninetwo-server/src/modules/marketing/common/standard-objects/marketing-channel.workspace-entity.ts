@@ -19,6 +19,8 @@ import { MARKETING_CHANNEL_STANDARD_FIELD_IDS } from 'src/engine/workspace-manag
 import { STANDARD_OBJECT_ICONS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-icons';
 import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-ids';
 import { ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
+import { AdsCampaignWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity';
+import { AnalyticsDataWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/analytics-data.workspace-entity';
 
 export enum MarketingChannelSyncStatus {
   NOT_SYNCED = 'NOT_SYNCED',
@@ -274,7 +276,7 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
     icon: 'IconSettings',
   })
   @WorkspaceIsNullable()
-  accountConfig: Record<string, any> | null;
+  accountConfig: Record<string, never> | null;
 
   @WorkspaceRelation({
     standardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.connectedAccount,
@@ -297,14 +299,10 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
     label: msg`Ads Campaigns`,
     description: msg`Ads Campaigns`,
     icon: 'IconTargetArrow',
-    inverseSideTarget: () =>
-      import('src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity').then(
-        (m) => m.AdsCampaignWorkspaceEntity,
-      ),
-    inverseSideFieldKey: 'marketingChannel',
+    inverseSideTarget: () => AdsCampaignWorkspaceEntity,
     onDelete: RelationOnDeleteAction.CASCADE,
   })
-  adsCampaigns: Relation<any[]>;
+  adsCampaigns: Relation<AdsCampaignWorkspaceEntity[]>;
 
   @WorkspaceRelation({
     standardId: MARKETING_CHANNEL_STANDARD_FIELD_IDS.analyticsData,
@@ -312,13 +310,8 @@ export class MarketingChannelWorkspaceEntity extends BaseWorkspaceEntity {
     label: msg`Analytics Data`,
     description: msg`Analytics Data`,
     icon: 'IconChartBar',
-    inverseSideTarget: () =>
-      import('src/modules/marketing/common/standard-objects/analytics-data.workspace-entity').then(
-        (m) => m.AnalyticsDataWorkspaceEntity,
-      ),
-    inverseSideFieldKey: 'marketingChannel',
+    inverseSideTarget: () => AnalyticsDataWorkspaceEntity,
     onDelete: RelationOnDeleteAction.CASCADE,
   })
-  analyticsData: Relation<any[]>;
+  analyticsData: Relation<AnalyticsDataWorkspaceEntity[]>;
 }
-

@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
 import { Trans, useLingui } from '@lingui/react/macro';
-import {
-    IconChartBar,
-    IconChartPie,
-    IconTargetArrow,
-} from '@tabler/icons-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -18,9 +13,14 @@ import { GoogleAnalyticsAccountSelectorContainer } from '@/settings/integrations
 import { MarketingIntegrationCard } from '@/settings/integrations/marketing/components/MarketingIntegrationCard';
 import { useMarketingOAuthConnect } from '@/settings/integrations/marketing/hooks/useMarketingOAuthConnect';
 import { SubMenuTopBarContainer } from '@/ui/layout/page/components/SubMenuTopBarContainer';
-import { SettingsPath } from 'ninetwo-shared/types';
+import { ConnectedAccountProvider, SettingsPath } from 'ninetwo-shared/types';
 import { getSettingsPath } from 'ninetwo-shared/utils';
-import { H2Title } from 'ninetwo-ui/display';
+import {
+  H2Title,
+  IconChartBar,
+  IconChartPie,
+  IconTargetArrow,
+} from 'ninetwo-ui/display';
 import { Section } from 'ninetwo-ui/layout';
 
 import { type ConnectedAccount } from '@/accounts/types/ConnectedAccount';
@@ -38,10 +38,10 @@ export const SettingsIntegrationsMarketing = () => {
   const { connectGoogleAds, connectGoogleAnalytics, connectMetaAds } =
     useMarketingOAuthConnect();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [showAccountSelector, setShowAccountSelector] = useState<{
-    platform: 'google-ads' | 'google-analytics' | null;
-    accountId: string | null;
-  }>({ platform: null, accountId: null });
+  const [configurationState, setConfigurationState] = useState<{
+    connectedAccountId: string | null;
+    platform: 'GOOGLE_ADS' | 'GOOGLE_ANALYTICS' | null;
+  }>({ connectedAccountId: null, platform: null });
 
   const { records: connectedAccounts } = useFindManyRecords<ConnectedAccount>({
     objectNameSingular: CoreObjectNameSingular.ConnectedAccount,
@@ -52,74 +52,77 @@ export const SettingsIntegrationsMarketing = () => {
     },
   });
 
-  // Detecta quando voltou do OAuth e mostra o seletor de contas
   useEffect(() => {
     const connected = searchParams.get('connected');
     const accountId = searchParams.get('accountId');
 
-    if (connected && accountId) {
-      if (connected === 'google-ads' || connected === 'google-analytics') {
-        setShowAccountSelector({
-          platform: connected,
-          accountId,
+    if (connected != null && accountId != null) {
+      if (connected === 'google-ads') {
+        setConfigurationState({
+          connectedAccountId: accountId,
+          platform: 'GOOGLE_ADS',
+        });
+      } else if (connected === 'google-analytics') {
+        setConfigurationState({
+          connectedAccountId: accountId,
+          platform: 'GOOGLE_ANALYTICS',
         });
       }
-      // Limpa os parâmetros da URL
       setSearchParams({});
     }
   }, [searchParams, setSearchParams]);
 
   const integrations = useMemo(() => {
+    // No Twenty-style, usamos provider GOOGLE e verificamos pelos scopes
     const googleAdsAccount = connectedAccounts.find(
-      (acc) => acc.provider === 'google-ads',
+      (acc) =>
+        acc.provider === ConnectedAccountProvider.GOOGLE &&
+        acc.scopes?.includes('https://www.googleapis.com/auth/adwords'),
     );
     const googleAnalyticsAccount = connectedAccounts.find(
-      (acc) => acc.provider === 'google-analytics',
+      (acc) =>
+        acc.provider === ConnectedAccountProvider.GOOGLE &&
+        acc.scopes?.includes('https://www.googleapis.com/auth/analytics.readonly'),
     );
     const metaAdsAccount = connectedAccounts.find(
-      (acc) => acc.provider === 'meta-ads',
+      (acc) => acc.provider === ConnectedAccountProvider.META_ADS,
     );
 
     return [
       {
         platform: 'GOOGLE_ADS' as const,
         name: 'Google Ads',
-        description: t`Conecte sua conta Google Ads para visualizar campanhas, métricas e gerenciar anúncios diretamente no NineTwo.`,
+        description: t`Connect your Google Ads account to view campaigns, metrics and manage ads directly in NineTwo.`,
         Icon: IconTargetArrow,
         logoUrl: '/images/integrations/google-ads-logo.webp',
         isConnected: !!googleAdsAccount,
         connectedAccountId: googleAdsAccount?.id,
         configureUrl: '/settings/integrations/marketing/google-ads/configure',
-        onConnect: () =>
-          connectGoogleAds(
-            '/settings/integrations/marketing',
-          ),
+        onConnect: () => connectGoogleAds('/settings/integrations/marketing'),
       },
       {
         platform: 'GOOGLE_ANALYTICS' as const,
         name: 'Google Analytics',
-        description: t`Conecte sua conta Google Analytics (GA4) para visualizar dados de tráfego, sessões e conversões.`,
+        description: t`Connect your Google Analytics (GA4) account to view traffic data, sessions and conversions.`,
         Icon: IconChartPie,
         logoUrl: '/images/integrations/google-analytics-logo.png',
         isConnected: !!googleAnalyticsAccount,
         connectedAccountId: googleAnalyticsAccount?.id,
-        configureUrl: '/settings/integrations/marketing/google-analytics/configure',
+        configureUrl:
+          '/settings/integrations/marketing/google-analytics/configure',
         onConnect: () =>
-          connectGoogleAnalytics(
-            '/settings/integrations/marketing',
-          ),
+          connectGoogleAnalytics('/settings/integrations/marketing'),
       },
       {
         platform: 'META_ADS' as const,
         name: 'Meta Ads',
-        description: t`Conecte sua conta de anúncios Meta (Facebook/Instagram) para gerenciar campanhas e visualizar métricas.`,
+        description: t`Connect your Meta Ads (Facebook/Instagram) account to manage campaigns and view metrics.`,
         Icon: IconChartBar,
         logoUrl: '/images/integrations/meta-logo.png',
         isConnected: !!metaAdsAccount,
         connectedAccountId: metaAdsAccount?.id,
         configureUrl: '/settings/integrations/marketing/meta-ads/configure',
-        onConnect: () =>
-          connectMetaAds('/settings/integrations/marketing'),
+        onConnect: () => connectMetaAds('/settings/integrations/marketing'),
       },
     ];
   }, [
@@ -149,10 +152,10 @@ export const SettingsIntegrationsMarketing = () => {
         <Section>
           <H2Title
             title={t`Marketing & Analytics`}
-            description={t`Conecte suas plataformas de marketing para rastrear campanhas, métricas e dados de análise`}
+            description={t`Connect your marketing platforms to track campaigns, metrics and analytics data`}
           />
 
-          {showAccountSelector.platform === null ? (
+          {configurationState.platform === null ? (
             <StyledCardsContainer>
               {integrations.map((integration) => (
                 <MarketingIntegrationCard
@@ -164,35 +167,43 @@ export const SettingsIntegrationsMarketing = () => {
                   logoUrl={integration.logoUrl}
                   isConnected={integration.isConnected}
                   onConnect={integration.onConnect}
-                  onReconnect={integration.isConnected ? integration.onConnect : undefined}
+                  onReconnect={
+                    integration.isConnected ? integration.onConnect : undefined
+                  }
                   onManage={() => {
-                    // Mostrar seletor inline
                     const accountId = integration.connectedAccountId;
-                    if (accountId && integration.platform !== 'META_ADS') {
-                      setShowAccountSelector({
-                        platform:
-                          integration.platform === 'GOOGLE_ADS'
-                            ? 'google-ads'
-                            : 'google-analytics',
-                        accountId,
+                    if (
+                      accountId != null &&
+                      (integration.platform === 'GOOGLE_ADS' ||
+                        integration.platform === 'GOOGLE_ANALYTICS')
+                    ) {
+                      setConfigurationState({
+                        connectedAccountId: accountId,
+                        platform: integration.platform,
                       });
                     }
                   }}
                 />
               ))}
             </StyledCardsContainer>
-          ) : showAccountSelector.platform === 'google-ads' ? (
+          ) : configurationState.platform === 'GOOGLE_ADS' ? (
             <GoogleAdsAccountSelectorContainer
-              connectedAccountId={showAccountSelector.accountId!}
+              connectedAccountId={configurationState.connectedAccountId!}
               onClose={() =>
-                setShowAccountSelector({ platform: null, accountId: null })
+                setConfigurationState({
+                  platform: null,
+                  connectedAccountId: null,
+                })
               }
             />
-          ) : showAccountSelector.platform === 'google-analytics' ? (
+          ) : configurationState.platform === 'GOOGLE_ANALYTICS' ? (
             <GoogleAnalyticsAccountSelectorContainer
-              connectedAccountId={showAccountSelector.accountId!}
+              connectedAccountId={configurationState.connectedAccountId!}
               onClose={() =>
-                setShowAccountSelector({ platform: null, accountId: null })
+                setConfigurationState({
+                  platform: null,
+                  connectedAccountId: null,
+                })
               }
             />
           ) : null}

@@ -5,8 +5,8 @@ import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-acco
 import { MarketingChannelSyncStatusService } from 'src/modules/marketing/common/services/marketing-channel-sync-status.service';
 import { type MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 import {
-    MarketingDataStorageService,
-    type AnalyticsRowData,
+  MarketingDataStorageService,
+  type AnalyticsRowData,
 } from 'src/modules/marketing/marketing-import-manager/services/marketing-data-storage.service';
 
 @Injectable()
@@ -39,9 +39,10 @@ export class GoogleAnalyticsDataFetchService {
           connectedAccount,
         );
 
-      const accountConfig = marketingChannel.accountConfig as {
-        propertyId?: string;
-      } || {};
+      const accountConfig =
+        (marketingChannel.accountConfig as {
+          propertyId?: string;
+        }) || {};
 
       const propertyId = accountConfig.propertyId;
 
@@ -49,6 +50,7 @@ export class GoogleAnalyticsDataFetchService {
         this.logger.warn(
           `No property ID configured for Google Analytics channel ${marketingChannel.id}`,
         );
+
         return;
       }
 
@@ -98,13 +100,13 @@ export class GoogleAnalyticsDataFetchService {
         response.rows?.map((row) => ({
           date: row.dimensionValues?.[0]?.value || '',
           propertyId,
-          sessionSource: row.dimensionValues?.[1]?.value || null,
-          sessionMedium: row.dimensionValues?.[2]?.value || null,
-          sessionCampaign: row.dimensionValues?.[3]?.value || null,
-          deviceCategory: row.dimensionValues?.[4]?.value || null,
-          country: row.dimensionValues?.[5]?.value || null,
-          city: row.dimensionValues?.[6]?.value || null,
-          landingPage: row.dimensionValues?.[7]?.value || null,
+          sessionSource: row.dimensionValues?.[1]?.value ?? undefined,
+          sessionMedium: row.dimensionValues?.[2]?.value ?? undefined,
+          sessionCampaign: row.dimensionValues?.[3]?.value ?? undefined,
+          deviceCategory: row.dimensionValues?.[4]?.value ?? undefined,
+          country: row.dimensionValues?.[5]?.value ?? undefined,
+          city: row.dimensionValues?.[6]?.value ?? undefined,
+          landingPage: row.dimensionValues?.[7]?.value ?? undefined,
           sessions: Number(row.metricValues?.[0]?.value) || 0,
           totalUsers: Number(row.metricValues?.[1]?.value) || 0,
           newUsers: Number(row.metricValues?.[2]?.value) || 0,
@@ -151,5 +153,3 @@ export class GoogleAnalyticsDataFetchService {
     }
   }
 }
-
-

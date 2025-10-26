@@ -29,9 +29,7 @@ export class GoogleAnalyticsOauthGuard
     private readonly workspaceRepository: Repository<Workspace>,
     private readonly workspaceDomainsService: WorkspaceDomainsService,
   ) {
-    super({
-      state: true,
-    });
+    super();
   }
 
   async canActivate(context: ExecutionContext) {
@@ -40,7 +38,6 @@ export class GoogleAnalyticsOauthGuard
     try {
       const request = context.switchToHttp().getRequest();
 
-      // Verify transient token upfront
       const { workspaceId } =
         await this.transientTokenService.verifyTransientToken(
           request.query.transientToken,
@@ -55,13 +52,6 @@ export class GoogleAnalyticsOauthGuard
           'Workspace not found',
           AuthExceptionCode.WORKSPACE_NOT_FOUND,
         );
-      }
-
-      // Pass transient token as state parameter for OAuth flow
-      if (request.query.transientToken) {
-        request.authInfo = {
-          state: request.query.transientToken,
-        };
       }
 
       const canActivate = (await super.canActivate(context)) as boolean;
@@ -88,4 +78,3 @@ export class GoogleAnalyticsOauthGuard
     };
   }
 }
-

@@ -4,7 +4,7 @@ import { CalendarModule } from 'src/modules/calendar/calendar.module';
 import { ConnectedAccountModule } from 'src/modules/connected-account/connected-account.module';
 import { FavoriteFolderModule } from 'src/modules/favorite-folder/favorite-folder.module';
 import { FavoriteModule } from 'src/modules/favorite/favorite.module';
-import { MarketingAdsManagerModule } from 'src/modules/marketing-ads-manager/marketing-ads-manager.module';
+import { MarketingModule } from 'src/modules/marketing/marketing.module';
 import { MessagingModule } from 'src/modules/messaging/messaging.module';
 import { StandardViewModule } from 'src/modules/view/standard-view.module';
 import { WorkflowModule } from 'src/modules/workflow/workflow.module';
@@ -14,7 +14,7 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     MessagingModule,
     CalendarModule,
     ConnectedAccountModule,
-    MarketingAdsManagerModule,
+    MarketingModule,
     StandardViewModule,
     WorkflowModule,
     FavoriteFolderModule,

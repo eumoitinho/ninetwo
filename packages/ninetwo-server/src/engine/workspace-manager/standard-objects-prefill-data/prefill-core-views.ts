@@ -15,6 +15,7 @@ import { type WorkspaceEntityManager } from 'src/engine/ninetwo-orm/entity-manag
 import { shouldSeedWorkspaceFavorite } from 'src/engine/utils/should-seed-workspace-favorite';
 import { prefillWorkspaceFavorites } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-workspace-favorites';
 import { type ViewDefinition } from 'src/engine/workspace-manager/standard-objects-prefill-data/types/view-definition.interface';
+import { adsCampaignsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/ads-campaigns-all.view';
 import { companiesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/companies-all.view';
 import { dashboardsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/dashboards-all.view';
 import { notesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/notes-all.view';
@@ -44,6 +45,8 @@ export const prefillCoreViews = async ({
   schemaName,
   featureFlags,
 }: PrefillCoreViewsArgs): Promise<ViewEntity[]> => {
+  const adsCampaignsView = adsCampaignsAllView(objectMetadataItems, true);
+
   const views = [
     companiesAllView(objectMetadataItems, true),
     peopleAllView(objectMetadataItems, true),
@@ -56,6 +59,7 @@ export const prefillCoreViews = async ({
     workflowsAllView(objectMetadataItems, true),
     workflowVersionsAllView(objectMetadataItems, true),
     workflowRunsAllView(objectMetadataItems, true),
+    ...(adsCampaignsView ? [adsCampaignsView] : []),
   ];
 
   if (featureFlags?.[FeatureFlagKey.IS_PAGE_LAYOUT_ENABLED]) {

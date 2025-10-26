@@ -1,13 +1,13 @@
-import { useCallback } from 'react';
 import { type AppPath, ConnectedAccountProvider } from 'ninetwo-shared/types';
+import { useCallback } from 'react';
 
 import { useRedirect } from '@/domain-manager/hooks/useRedirect';
 import { CustomError } from 'ninetwo-shared/utils';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
 import {
-  type CalendarChannelVisibility,
-  type MessageChannelVisibility,
-  useGenerateTransientTokenMutation,
+    type CalendarChannelVisibility,
+    type MessageChannelVisibility,
+    useGenerateTransientTokenMutation,
 } from '~/generated-metadata/graphql';
 
 const getProviderUrl = (provider: ConnectedAccountProvider) => {

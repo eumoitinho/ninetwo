@@ -1,30 +1,20 @@
 import { Module } from '@nestjs/common';
 
-import { NinetwoORMModule } from 'src/engine/ninetwo-orm/ninetwo-orm.module';
-import { OAuth2ClientManagerModule } from 'src/modules/connected-account/oauth2-client-manager/oauth2-client-manager.module';
-import { GoogleAdsAccountService } from 'src/modules/connected-account/services/google-ads-account.service';
-import { GoogleAnalyticsPropertyService } from 'src/modules/connected-account/services/google-analytics-property.service';
-import { MarketingAccountsResolver } from 'src/modules/connected-account/services/marketing-accounts.resolver';
 import { MarketingCommonModule } from 'src/modules/marketing/common/marketing-common.module';
+import { MarketingAccountsManagerModule } from 'src/modules/marketing/marketing-accounts-manager/marketing-accounts-manager.module';
+import { MarketingApisManagerModule } from 'src/modules/marketing/marketing-apis-manager/marketing-apis-manager.module';
 import { MarketingImportManagerModule } from 'src/modules/marketing/marketing-import-manager/marketing-import-manager.module';
-import { MarketingChannelResolver } from 'src/modules/marketing/resolvers/marketing-channel.resolver';
-import { MarketingAPIsService } from 'src/modules/marketing/services/marketing-apis.service';
+import { MarketingRealtimeManagerModule } from 'src/modules/marketing/marketing-realtime-manager/marketing-realtime-manager.module';
 
 @Module({
   imports: [
-    MarketingCommonModule,
-    MarketingImportManagerModule,
-    OAuth2ClientManagerModule,
-    NinetwoORMModule,
+    MarketingCommonModule, // Entities compartilhadas
+    MarketingAccountsManagerModule, // Gerenciamento de contas
+    MarketingApisManagerModule, // APIs gerais
+    MarketingImportManagerModule, // Background sync
+    MarketingRealtimeManagerModule, // Operações em tempo real
   ],
-  providers: [
-    MarketingAPIsService,
-    MarketingChannelResolver,
-    MarketingAccountsResolver,
-    GoogleAdsAccountService,
-    GoogleAnalyticsPropertyService,
-  ],
-  exports: [MarketingAPIsService, MarketingImportManagerModule],
+  providers: [], // ✅ VAZIO - lógica nos submódulos
+  exports: [], // ✅ VAZIO - submódulos exportam o que precisam
 })
 export class MarketingModule {}
-

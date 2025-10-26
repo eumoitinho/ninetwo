@@ -166,15 +166,14 @@ export class ConnectedAccountWorkspaceEntity extends BaseWorkspaceEntity {
   })
   calendarChannels: Relation<CalendarChannelWorkspaceEntity[]>;
 
-  // TODO: Temporarily commented out to allow MarketingChannel to sync first
-  // @WorkspaceRelation({
-  //   standardId: CONNECTED_ACCOUNT_STANDARD_FIELD_IDS.marketingChannels,
-  //   type: RelationType.ONE_TO_MANY,
-  //   label: msg`Marketing Channels`,
-  //   description: msg`Marketing Channels`,
-  //   icon: 'IconBrandGoogle',
-  //   inverseSideTarget: () => MarketingChannelWorkspaceEntity,
-  //   onDelete: RelationOnDeleteAction.CASCADE,
-  // })
-  // marketingChannels: Relation<MarketingChannelWorkspaceEntity[]>;
+  @WorkspaceRelation({
+    standardId: CONNECTED_ACCOUNT_STANDARD_FIELD_IDS.marketingChannels,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Marketing Channels`,
+    description: msg`Marketing Channels`,
+    icon: 'IconBrandGoogle',
+    inverseSideTarget: () => MarketingChannelWorkspaceEntity,
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  marketingChannels: Relation<MarketingChannelWorkspaceEntity[]>;
 }

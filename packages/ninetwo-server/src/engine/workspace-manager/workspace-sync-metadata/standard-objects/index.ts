@@ -9,6 +9,10 @@ import { ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/s
 import { DashboardWorkspaceEntity } from 'src/modules/dashboard/standard-objects/dashboard.workspace-entity';
 import { FavoriteFolderWorkspaceEntity } from 'src/modules/favorite-folder/standard-objects/favorite-folder.workspace-entity';
 import { FavoriteWorkspaceEntity } from 'src/modules/favorite/standard-objects/favorite.workspace-entity';
+import { AdsCampaignWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/ads-campaign.workspace-entity';
+import { AnalyticsDataWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/analytics-data.workspace-entity';
+import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
+import { MarketingDashboardWorkspaceEntity } from 'src/modules/marketing/common/standard-objects/marketing-dashboard.workspace-entity';
 import { MessageChannelMessageAssociationWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-channel-message-association.workspace-entity';
 import { MessageChannelWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-channel.workspace-entity';
 import { MessageFolderWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-folder.workspace-entity';
@@ -62,6 +66,10 @@ export const standardObjectMetadataDefinitions = [
   MessageThreadWorkspaceEntity,
   MessageWorkspaceEntity,
   MessageChannelWorkspaceEntity,
+  MarketingChannelWorkspaceEntity,
+  AdsCampaignWorkspaceEntity,
+  AnalyticsDataWorkspaceEntity,
+  MarketingDashboardWorkspaceEntity,
   MessageParticipantWorkspaceEntity,
   MessageFolderWorkspaceEntity,
   MessageChannelMessageAssociationWorkspaceEntity,

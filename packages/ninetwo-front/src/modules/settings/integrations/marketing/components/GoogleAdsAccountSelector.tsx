@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
+import { IconAlertCircle, IconCheck } from 'ninetwo-ui/display';
 
 import { Button } from 'ninetwo-ui/input';
 import { Card } from 'ninetwo-ui/layout';
@@ -96,6 +96,22 @@ const StyledInfoText = styled.div`
   line-height: 1.5;
 `;
 
+const StyledSelectionControls = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledSelectionText = styled.div`
+  color: ${({ theme }) => theme.font.color.tertiary};
+  font-size: ${({ theme }) => theme.font.size.sm};
+`;
+
+const StyledSelectionButtons = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
+
 const StyledActions = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing(3)};
@@ -137,40 +153,40 @@ export const GoogleAdsAccountSelector = ({
           <IconAlertCircle size={20} />
           <StyledInfoText>
             <Trans>
-              Conta MCC detectada (ID: {managerAccountId}). Selecione abaixo as
-              contas cliente que deseja sincronizar.
+              MCC account detected (ID: {managerAccountId}). Select the client
+              accounts you want to sync.
             </Trans>
           </StyledInfoText>
         </StyledInfoBox>
       )}
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ fontSize: '14px', color: '#666' }}>
-          <Trans>
-            {selectedAccountIds.length} de {accounts.length} contas selecionadas
-          </Trans>
-        </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
+      <StyledSelectionControls>
+        <StyledSelectionText>
+          {(() => {
+            const selectedCount = selectedAccountIds.length;
+            const totalCount = accounts.length;
+            return (
+              <Trans>
+                {selectedCount} of {totalCount} accounts selected
+              </Trans>
+            );
+          })()}
+        </StyledSelectionText>
+        <StyledSelectionButtons>
           <Button
             variant="tertiary"
             size="small"
-            title={t`Selecionar todas`}
+            title={t`Select all`}
             onClick={selectAll}
           />
           <Button
             variant="tertiary"
             size="small"
-            title={t`Desmarcar todas`}
+            title={t`Deselect all`}
             onClick={deselectAll}
           />
-        </div>
-      </div>
+        </StyledSelectionButtons>
+      </StyledSelectionControls>
 
       <StyledAccountsGrid>
         {accounts.map((account) => {
@@ -202,12 +218,12 @@ export const GoogleAdsAccountSelector = ({
       <StyledActions>
         <Button
           variant="secondary"
-          title={t`Cancelar`}
+          title={t`Cancel`}
           onClick={onCancel || (() => window.history.back())}
         />
         <Button
           variant="primary"
-          title={t`Confirmar e sincronizar`}
+          title={t`Confirm and sync`}
           onClick={onConfirm}
           disabled={selectedAccountIds.length === 0 || isLoading}
         />

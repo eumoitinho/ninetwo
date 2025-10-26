@@ -38,6 +38,12 @@ export class EmailAliasManagerService {
         // IMAP Protocol does not support email aliases
         handleAliases = [];
         break;
+      case ConnectedAccountProvider.GOOGLE_ADS:
+      case ConnectedAccountProvider.GOOGLE_ANALYTICS:
+      case ConnectedAccountProvider.META_ADS:
+        // Marketing providers do not support email aliases
+        handleAliases = [];
+        break;
       default:
         assertUnreachable(
           connectedAccount.provider,

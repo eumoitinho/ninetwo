@@ -16,5 +16,6 @@ export type ConnectedAccount = {
   calendarChannels: CalendarChannel[];
   scopes: string[] | null;
   connectionParameters?: ImapSmtpCaldavAccount;
+  syncConfig?: Record<string, any> | null;
   __typename: 'ConnectedAccount';
 };

@@ -97,6 +97,11 @@ export class ConnectedAccountRefreshTokensService {
       }
       case ConnectedAccountProvider.IMAP_SMTP_CALDAV:
         return true;
+      case ConnectedAccountProvider.GOOGLE_ADS:
+      case ConnectedAccountProvider.GOOGLE_ANALYTICS:
+      case ConnectedAccountProvider.META_ADS:
+        // Marketing providers handle tokens differently
+        return true;
       default:
         return assertUnreachable(
           connectedAccount.provider,
@@ -126,6 +131,14 @@ export class ConnectedAccountRefreshTokensService {
             `Token refresh is not supported for IMAP provider for connected account ${connectedAccount.id} in workspace ${workspaceId}`,
             ConnectedAccountRefreshAccessTokenExceptionCode.REFRESH_ACCESS_TOKEN_FAILED,
           );
+        case ConnectedAccountProvider.GOOGLE_ADS:
+        case ConnectedAccountProvider.GOOGLE_ANALYTICS:
+        case ConnectedAccountProvider.META_ADS:
+          // Marketing providers handle token refresh through their own services
+          return {
+            accessToken: connectedAccount.accessToken,
+            refreshToken: connectedAccount.refreshToken,
+          };
         default:
           return assertUnreachable(
             connectedAccount.provider,

@@ -208,6 +208,24 @@ export class ConfigVariables {
   AUTH_GOOGLE_ANALYTICS_CALLBACK_URL: string;
 
   @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.META_AUTH,
+    isSensitive: false,
+    description: 'App ID for Meta Ads authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  META_ADS_APP_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.META_AUTH,
+    isSensitive: true,
+    description: 'App secret for Meta Ads authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  META_ADS_APP_SECRET: string;
+
+  @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.OTHER,
     description: 'Enable or disable the IMAP messaging integration',
     type: ConfigVariableType.BOOLEAN,

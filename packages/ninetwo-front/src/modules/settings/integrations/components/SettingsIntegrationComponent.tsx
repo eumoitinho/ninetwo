@@ -2,9 +2,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { type SettingsIntegration } from '@/settings/integrations/types/SettingsIntegration';
-import { Link } from 'react-router-dom';
 import { isDefined } from 'ninetwo-shared/utils';
-import { Button } from 'ninetwo-ui/input';
+import { Pill } from 'ninetwo-ui/components';
 import {
   IconArrowUpRight,
   IconBolt,
@@ -12,7 +11,8 @@ import {
   IconPlus,
   Status,
 } from 'ninetwo-ui/display';
-import { Pill } from 'ninetwo-ui/components';
+import { Button } from 'ninetwo-ui/input';
+import { Link } from 'react-router-dom';
 import { useCopyToClipboard } from '~/hooks/useCopyToClipboard';
 
 interface SettingsIntegrationComponentProps {
@@ -117,7 +117,6 @@ export const SettingsIntegrationComponent = ({
       ) : (
         <Button
           to={integration.link}
-          target="_blank"
           Icon={IconArrowUpRight}
           title={integration.linkText}
           size="small"

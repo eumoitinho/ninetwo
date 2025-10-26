@@ -5,7 +5,6 @@ import { getSettingsPath } from 'ninetwo-shared/utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SnackBarVariant } from '@/ui/feedback/snack-bar-manager/components/SnackBar';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { H2Title } from 'ninetwo-ui/display';
 import { Loader } from 'ninetwo-ui/feedback';
@@ -27,7 +26,7 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
 }: GoogleAnalyticsAccountSelectorContainerProps) => {
   const { t } = useLingui();
   const navigate = useNavigate();
-  const { enqueueSnackBar } = useSnackBar();
+  const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
   const [selectedAccountIds, setSelectedAccountIds] = useState<string[]>([]);
 
   const { data, loading, error } = useQuery(GET_MARKETING_ANALYTICS_ACCOUNTS, {
@@ -38,18 +37,18 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
     CONFIGURE_MARKETING_ANALYTICS_ACCOUNTS,
     {
       onCompleted: () => {
-        enqueueSnackBar(t`Contas configuradas com sucesso!`, {
-          variant: SnackBarVariant.Success,
+        enqueueSuccessSnackBar({
+          message: t`Accounts configured successfully!`,
         });
-        if (onClose) {
+        if (typeof onClose === 'function') {
           onClose();
         } else {
           navigate(getSettingsPath(SettingsPath.IntegrationsMarketing));
         }
       },
-      onError: (err) => {
-        enqueueSnackBar(t`Erro ao configurar contas: ${err.message}`, {
-          variant: SnackBarVariant.Error,
+      onError: (error) => {
+        enqueueErrorSnackBar({
+          message: t`Error configuring accounts: ${error}`,
         });
       },
     },
@@ -72,11 +71,16 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
     );
   }
 
-  if (error) {
+  if (error != null) {
     return (
       <Section>
-        <H2Title title={t`Erro ao carregar propriedades`} />
-        <p>{error.message}</p>
+        <H2Title title={t`Error loading properties`} />
+        <p>
+          <Trans>
+            An error occurred while loading your Google Analytics properties.
+          </Trans>
+        </p>
+        <p style={{ color: 'red' }}>{error.message}</p>
       </Section>
     );
   }
@@ -87,11 +91,11 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
   if (accounts.length === 0) {
     return (
       <Section>
-        <H2Title title={t`Nenhuma propriedade encontrada`} />
+        <H2Title title={t`No properties found`} />
         <p>
           <Trans>
-            Não foram encontradas propriedades Google Analytics acessíveis.
-            Verifique as permissões da sua conta.
+            No accessible Google Analytics properties found. Check your account
+            permissions.
           </Trans>
         </p>
       </Section>
@@ -101,8 +105,8 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
   return (
     <Section>
       <H2Title
-        title={t`Selecione as propriedades Google Analytics`}
-        description={t`Escolha quais propriedades você deseja sincronizar com o NineTwo.`}
+        title={t`Select Google Analytics properties`}
+        description={t`Choose which properties you want to sync with NineTwo.`}
       />
       <GoogleAnalyticsAccountSelector
         accounts={accounts}
@@ -115,5 +119,3 @@ export const GoogleAnalyticsAccountSelectorContainer = ({
     </Section>
   );
 };
-
-

@@ -4,20 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, type VerifyCallback } from 'passport-google-oauth20';
 
 import { GOOGLE_ANALYTICS_SCOPES } from 'ninetwo-marketing-core';
+import { type GoogleAPIsRequest } from 'src/engine/core-modules/auth/types/google-api-request.type';
 import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.service';
-
-export type GoogleAnalyticsRequest = {
-  user: {
-    accessToken: string;
-    refreshToken: string;
-    transientToken?: string;
-    emails: Array<{ value: string; verified: boolean }>;
-  };
-  query: {
-    state?: string;
-    redirect?: string;
-  };
-};
 
 @Injectable()
 export class GoogleAnalyticsOauthStrategy extends PassportStrategy(
@@ -41,26 +29,26 @@ export class GoogleAnalyticsOauthStrategy extends PassportStrategy(
   }
 
   async validate(
-    request: GoogleAnalyticsRequest,
+    request: GoogleAPIsRequest,
     accessToken: string,
     refreshToken: string,
-    profile: {
-      emails?: Array<{ value: string; verified: boolean }>;
-    },
+    profile: any,
     done: VerifyCallback,
   ): Promise<void> {
     const { emails } = profile;
     const transientToken =
-      typeof request.query.state === 'string' ? request.query.state : undefined;
+      typeof request.query.state === 'string'
+        ? request.query.state
+        : undefined;
 
-    const user: GoogleAnalyticsRequest['user'] = {
+    const user = {
+      emails,
       accessToken,
       refreshToken,
       transientToken,
-      emails: emails || [],
+      redirectLocation: request.query.redirectLocation,
     };
 
     done(null, user);
   }
 }
-

@@ -23,6 +23,7 @@ export class MarketingDataImportService {
 
     await this.marketingChannelSyncStatusService.markAsDataImportOngoing(
       marketingChannel.id,
+      workspaceId,
     );
 
     try {
@@ -32,6 +33,7 @@ export class MarketingDataImportService {
       // Mark as completed after successful import
       await this.marketingChannelSyncStatusService.markAsCompleted(
         marketingChannel.id,
+        workspaceId,
       );
     } catch (error) {
       this.logger.error(
@@ -41,14 +43,15 @@ export class MarketingDataImportService {
 
       await this.marketingChannelSyncStatusService.markAsFailedUnknownAndFlushDataFetchPending(
         marketingChannel.id,
+        workspaceId,
       );
 
       await this.marketingChannelSyncStatusService.incrementThrottleFailureCount(
         marketingChannel.id,
+        workspaceId,
       );
 
       throw error;
     }
   }
 }
-

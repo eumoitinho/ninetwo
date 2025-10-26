@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import { GoogleAuth } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 
 import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/ninetwo-config.service';
 
@@ -24,17 +24,21 @@ export class GoogleAnalyticsOAuth2ClientManagerService {
     );
 
     try {
-      const auth = new GoogleAuth({
-        credentials: {
-          type: 'authorized_user',
-          client_id: clientId,
-          client_secret: clientSecret,
-          refresh_token: refreshToken,
-        },
-        scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
+      const oauth2Client = new OAuth2Client({
+        clientId,
+        clientSecret,
       });
 
-      return new BetaAnalyticsDataClient({ auth });
+      oauth2Client.setCredentials({
+        refresh_token: refreshToken,
+      });
+
+      // BetaAnalyticsDataClient accepts OAuth2Client
+      // Type coercion is needed due to strict type checking
+      const client = new BetaAnalyticsDataClient();
+      (client as unknown as { auth: OAuth2Client }).auth = oauth2Client;
+
+      return client;
     } catch (error) {
       this.logger.error(`Error creating Google Analytics client`, error);
       throw error;

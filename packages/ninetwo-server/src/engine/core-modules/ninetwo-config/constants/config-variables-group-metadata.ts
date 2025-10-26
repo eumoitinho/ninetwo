@@ -37,6 +37,11 @@ export const CONFIG_VARIABLES_GROUP_METADATA: Record<
     description: 'Configure Microsoft integration (login, calendar, email)',
     isHiddenOnLoad: false,
   },
+  [ConfigVariablesGroup.META_AUTH]: {
+    position: 550,
+    description: 'Configure Meta (Facebook) Ads integration',
+    isHiddenOnLoad: false,
+  },
   [ConfigVariablesGroup.EMAIL_SETTINGS]: {
     position: 600,
     description:

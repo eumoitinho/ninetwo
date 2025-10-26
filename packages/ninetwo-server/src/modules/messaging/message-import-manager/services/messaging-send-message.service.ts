@@ -179,6 +179,12 @@ export class MessagingSendMessageService {
 
         break;
       }
+      case ConnectedAccountProvider.GOOGLE_ADS:
+      case ConnectedAccountProvider.GOOGLE_ANALYTICS:
+      case ConnectedAccountProvider.META_ADS:
+        throw new Error(
+          `Provider ${connectedAccount.provider} is not supported for sending messages`,
+        );
       default:
         assertUnreachable(
           connectedAccount.provider,

@@ -1,4 +1,4 @@
-import { type PerformTwentyConfigQueryParams } from 'test/integration/twenty-config/types/perform-twenty-config-query.type';
+import { type PerformTwentyConfigQueryParams } from 'test/integration/ninetwo-config/types/perform-twenty-config-query.type';
 
 import { makeAdminPanelAPIRequest } from './make-admin-panel-api-request.util';
 import {

@@ -11,18 +11,11 @@ export class MetaAdsOAuth2ClientManagerService {
   constructor(private readonly twentyConfigService: NinetwoConfigService) {}
 
   public async getOAuth2Client(accessToken: string): Promise<FacebookAdsApi> {
-    const appId = this.twentyConfigService.get('META_ADS_APP_ID');
-    const appSecret = this.twentyConfigService.get('META_ADS_APP_SECRET');
-
     try {
+      // Initialize with access token
       const api = FacebookAdsApi.init(accessToken);
 
       api.setDebug(false);
-
-      // Optionally set app info
-      if (appId && appSecret) {
-        FacebookAdsApi.init(accessToken, appSecret, appId);
-      }
 
       return api;
     } catch (error) {

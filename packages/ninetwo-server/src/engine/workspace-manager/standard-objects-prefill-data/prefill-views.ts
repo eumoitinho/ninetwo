@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import { FeatureFlagKey } from 'src/engine/core-modules/feature-flag/enums/feature-flag-key.enum';
 import { type ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { type ViewDefinition } from 'src/engine/workspace-manager/standard-objects-prefill-data/types/view-definition.interface';
+import { adsCampaignsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/ads-campaigns-all.view';
 import { companiesAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/companies-all.view';
 import { customAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/custom-all.view';
 import { dashboardsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/dashboards-all.view';
@@ -32,6 +33,8 @@ export const prefillViews = async (
     customAllView(item),
   );
 
+  const adsCampaignsView = adsCampaignsAllView(objectMetadataItems);
+
   const views = [
     companiesAllView(objectMetadataItems),
     peopleAllView(objectMetadataItems),
@@ -44,6 +47,7 @@ export const prefillViews = async (
     workflowsAllView(objectMetadataItems),
     workflowVersionsAllView(objectMetadataItems),
     workflowRunsAllView(objectMetadataItems),
+    ...(adsCampaignsView ? [adsCampaignsView] : []),
     ...customViews,
   ];
 

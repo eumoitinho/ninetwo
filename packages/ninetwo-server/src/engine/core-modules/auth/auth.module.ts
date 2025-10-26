@@ -9,8 +9,6 @@ import { ApiKeyModule } from 'src/engine/core-modules/api-key/api-key.module';
 import { AppToken } from 'src/engine/core-modules/app-token/app-token.entity';
 import { AppTokenService } from 'src/engine/core-modules/app-token/services/app-token.service';
 import { AuditModule } from 'src/engine/core-modules/audit/audit.module';
-import { GoogleAdsAuthController } from 'src/engine/core-modules/auth/controllers/google-ads-auth.controller';
-import { GoogleAnalyticsAuthController } from 'src/engine/core-modules/auth/controllers/google-analytics-auth.controller';
 import { GoogleAPIsAuthController } from 'src/engine/core-modules/auth/controllers/google-apis-auth.controller';
 import { GoogleAuthController } from 'src/engine/core-modules/auth/controllers/google-auth.controller';
 import { MicrosoftAPIsAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-apis-auth.controller';
@@ -30,8 +28,6 @@ import { ResetMessageFolderService } from 'src/engine/core-modules/auth/services
 import { ResetPasswordService } from 'src/engine/core-modules/auth/services/reset-password.service';
 import { SignInUpService } from 'src/engine/core-modules/auth/services/sign-in-up.service';
 import { UpdateConnectedAccountOnReconnectService } from 'src/engine/core-modules/auth/services/update-connected-account-on-reconnect.service';
-import { GoogleAdsOauthStrategy } from 'src/engine/core-modules/auth/strategies/google-ads-oauth.auth.strategy';
-import { GoogleAnalyticsOauthStrategy } from 'src/engine/core-modules/auth/strategies/google-analytics-oauth.auth.strategy';
 import { SamlAuthStrategy } from 'src/engine/core-modules/auth/strategies/saml.auth.strategy';
 import { AccessTokenService } from 'src/engine/core-modules/auth/token/services/access-token.service';
 import { LoginTokenService } from 'src/engine/core-modules/auth/token/services/login-token.service';
@@ -124,8 +120,6 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     MicrosoftAuthController,
     GoogleAPIsAuthController,
     MicrosoftAPIsAuthController,
-    GoogleAdsAuthController,
-    GoogleAnalyticsAuthController,
     SSOAuthController,
   ],
   providers: [
@@ -133,8 +127,6 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     AuthService,
     JwtAuthStrategy,
     SamlAuthStrategy,
-    GoogleAdsOauthStrategy,
-    GoogleAnalyticsOauthStrategy,
     AuthResolver,
     GoogleAPIsService,
     GoogleAPIScopesService,

@@ -5,7 +5,6 @@ import { getSettingsPath } from 'ninetwo-shared/utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SnackBarVariant } from '@/ui/feedback/snack-bar-manager/components/SnackBar';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { H2Title } from 'ninetwo-ui/display';
 import { Loader } from 'ninetwo-ui/feedback';
@@ -27,7 +26,7 @@ export const GoogleAdsAccountSelectorContainer = ({
 }: GoogleAdsAccountSelectorContainerProps) => {
   const { t } = useLingui();
   const navigate = useNavigate();
-  const { enqueueSnackBar } = useSnackBar();
+  const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
   const [selectedAccountIds, setSelectedAccountIds] = useState<string[]>([]);
 
   const { data, loading, error } = useQuery(GET_MARKETING_AD_ACCOUNTS, {
@@ -38,18 +37,18 @@ export const GoogleAdsAccountSelectorContainer = ({
     CONFIGURE_MARKETING_AD_ACCOUNTS,
     {
       onCompleted: () => {
-        enqueueSnackBar(t`Contas configuradas com sucesso!`, {
-          variant: SnackBarVariant.Success,
+        enqueueSuccessSnackBar({
+          message: t`Accounts configured successfully!`,
         });
-        if (onClose) {
+        if (typeof onClose === 'function') {
           onClose();
         } else {
           navigate(getSettingsPath(SettingsPath.IntegrationsMarketing));
         }
       },
       onError: (err) => {
-        enqueueSnackBar(t`Erro ao configurar contas: ${err.message}`, {
-          variant: SnackBarVariant.Error,
+        enqueueErrorSnackBar({
+          message: t`Error configuring accounts: ${err.message}`,
         });
       },
     },
@@ -73,11 +72,10 @@ export const GoogleAdsAccountSelectorContainer = ({
     );
   }
 
-  if (error) {
+  if (error != null) {
     return (
       <Section>
-        <H2Title title={t`Erro ao carregar contas`} />
-        <p>{error.message}</p>
+        <H2Title title={t`Error loading accounts`} />
       </Section>
     );
   }
@@ -88,11 +86,10 @@ export const GoogleAdsAccountSelectorContainer = ({
   if (accounts.length === 0) {
     return (
       <Section>
-        <H2Title title={t`Nenhuma conta encontrada`} />
+        <H2Title title={t`No accounts found`} />
         <p>
           <Trans>
-            Não foram encontradas contas Google Ads acessíveis. Verifique as
-            permissões da sua conta.
+            No Google Ads accounts found. Check your account permissions.
           </Trans>
         </p>
       </Section>
@@ -102,8 +99,8 @@ export const GoogleAdsAccountSelectorContainer = ({
   return (
     <Section>
       <H2Title
-        title={t`Selecione as contas Google Ads`}
-        description={t`Escolha quais contas você deseja sincronizar com o NineTwo.`}
+        title={t`Select Google Ads accounts`}
+        description={t`Choose which accounts you want to sync with NineTwo.`}
       />
       <GoogleAdsAccountSelector
         accounts={accounts}

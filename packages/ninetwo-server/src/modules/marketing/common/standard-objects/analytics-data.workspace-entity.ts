@@ -24,7 +24,6 @@ import { MarketingChannelWorkspaceEntity } from 'src/modules/marketing/common/st
   labelPlural: msg`Analytics Data`,
   description: msg`Google Analytics 4 Data`,
   icon: STANDARD_OBJECT_ICONS.analyticsData,
-  labelIdentifierStandardId: ANALYTICS_DATA_STANDARD_FIELD_IDS.date,
 })
 @WorkspaceIsSystem()
 export class AnalyticsDataWorkspaceEntity extends BaseWorkspaceEntity {

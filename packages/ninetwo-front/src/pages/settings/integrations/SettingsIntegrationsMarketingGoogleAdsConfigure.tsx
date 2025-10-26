@@ -25,12 +25,15 @@ export const SettingsIntegrationsMarketingGoogleAdsConfigure = () => {
         eq: currentWorkspaceMember?.id,
       },
       provider: {
-        eq: 'google-ads',
+        eq: 'google',
       },
     },
   });
 
-  const googleAdsAccount = connectedAccounts[0];
+  // Verificar se a conta tem scopes do Google Ads
+  const googleAdsAccount = connectedAccounts.find(
+    (acc) => acc.scopes?.includes('https://www.googleapis.com/auth/adwords'),
+  );
 
   if (!googleAdsAccount) {
     return (

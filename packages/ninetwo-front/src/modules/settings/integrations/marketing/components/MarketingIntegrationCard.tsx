@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { IconCheck, type IconPlugConnected, IconX } from '@tabler/icons-react';
 
+import { IconCheck, IconX } from 'ninetwo-ui/display';
 import { Button } from 'ninetwo-ui/input';
 import { Card } from 'ninetwo-ui/layout';
 
@@ -11,7 +11,7 @@ type MarketingIntegrationCardProps = {
   platform: MarketingPlatform;
   name: string;
   description: string;
-  Icon: typeof IconPlugConnected;
+  Icon: React.ElementType;
   logoUrl?: string;
   isConnected: boolean;
   onConnect: () => void;
@@ -48,9 +48,9 @@ const StyledIconContainer = styled.div<{ isConnected: boolean }>`
 `;
 
 const StyledLogo = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: contain;
+  width: 100%;
 `;
 
 const StyledContent = styled.div`
@@ -94,7 +94,7 @@ const StyledActions = styled.div`
 `;
 
 export const MarketingIntegrationCard = ({
-  platform,
+  platform: _platform,
   name,
   description,
   Icon,
@@ -122,12 +122,12 @@ export const MarketingIntegrationCard = ({
             {isConnected ? (
               <>
                 <IconCheck size={14} />
-                <Trans>Conectado</Trans>
+                <Trans>Connected</Trans>
               </>
             ) : (
               <>
                 <IconX size={14} />
-                <Trans>Não conectado</Trans>
+                <Trans>Not connected</Trans>
               </>
             )}
           </StyledStatusBadge>
@@ -141,7 +141,7 @@ export const MarketingIntegrationCard = ({
           <Button
             variant="primary"
             accent="default"
-            title={t`Conectar conta`}
+            title={t`Connect account`}
             onClick={onConnect}
           />
         ) : (
@@ -149,21 +149,21 @@ export const MarketingIntegrationCard = ({
             <Button
               variant="secondary"
               accent="default"
-              title={t`Gerenciar`}
+              title={t`Manage`}
               onClick={onManage}
             />
             {onReconnect && (
               <Button
                 variant="secondary"
                 accent="blue"
-                title={t`Reconectar`}
+                title={t`Reconnect`}
                 onClick={onReconnect}
               />
             )}
             <Button
               variant="secondary"
               accent="danger"
-              title={t`Desconectar`}
+              title={t`Disconnect`}
               onClick={() => {
                 // TODO: implement disconnect
               }}

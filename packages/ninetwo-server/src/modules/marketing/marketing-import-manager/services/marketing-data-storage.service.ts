@@ -149,9 +149,9 @@ export class MarketingDataStorageService {
           date: row.date,
           propertyId: row.propertyId,
           marketingChannelId,
-          sessionSource: row.sessionSource || null,
-          sessionMedium: row.sessionMedium || null,
-          deviceCategory: row.deviceCategory || null,
+          sessionSource: row.sessionSource || undefined,
+          sessionMedium: row.sessionMedium || undefined,
+          deviceCategory: row.deviceCategory || undefined,
         },
       });
 

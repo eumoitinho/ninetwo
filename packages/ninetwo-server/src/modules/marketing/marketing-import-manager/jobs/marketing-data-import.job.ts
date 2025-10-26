@@ -49,7 +49,7 @@ export class MarketingDataImportJob {
 
     if (
       isThrottled(
-        marketingChannel.syncStageStartedAt,
+        marketingChannel.syncStageStartedAt?.toISOString() || null,
         marketingChannel.throttleFailureCount,
       )
     ) {

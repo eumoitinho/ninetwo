@@ -24,12 +24,15 @@ export const SettingsIntegrationsMarketingGoogleAnalyticsConfigure = () => {
         eq: currentWorkspaceMember?.id,
       },
       provider: {
-        eq: 'google-analytics',
+        eq: 'google',
       },
     },
   });
 
-  const googleAnalyticsAccount = connectedAccounts[0];
+  // Verificar se a conta tem scopes do Google Analytics
+  const googleAnalyticsAccount = connectedAccounts.find(
+    (acc) => acc.scopes?.includes('https://www.googleapis.com/auth/analytics.readonly'),
+  );
 
   if (!googleAnalyticsAccount) {
     return (

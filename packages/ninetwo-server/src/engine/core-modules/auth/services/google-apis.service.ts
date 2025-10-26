@@ -4,8 +4,8 @@ import { ConnectedAccountProvider } from 'ninetwo-shared/types';
 import { v4 } from 'uuid';
 
 import {
-  AuthException,
-  AuthExceptionCode,
+    AuthException,
+    AuthExceptionCode,
 } from 'src/engine/core-modules/auth/auth.exception';
 import { CreateCalendarChannelService } from 'src/engine/core-modules/auth/services/create-calendar-channel.service';
 import { CreateConnectedAccountService } from 'src/engine/core-modules/auth/services/create-connected-account.service';
@@ -21,24 +21,25 @@ import { NinetwoConfigService } from 'src/engine/core-modules/ninetwo-config/nin
 import { type WorkspaceEntityManager } from 'src/engine/ninetwo-orm/entity-manager/workspace-entity-manager';
 import { NinetwoORMGlobalManager } from 'src/engine/ninetwo-orm/ninetwo-orm-global.manager';
 import {
-  CalendarEventListFetchJob,
-  type CalendarEventListFetchJobData,
+    CalendarEventListFetchJob,
+    type CalendarEventListFetchJobData,
 } from 'src/modules/calendar/calendar-event-import-manager/jobs/calendar-event-list-fetch.job';
 import {
-  CalendarChannelSyncStage,
-  type CalendarChannelVisibility,
-  type CalendarChannelWorkspaceEntity,
+    CalendarChannelSyncStage,
+    type CalendarChannelVisibility,
+    type CalendarChannelWorkspaceEntity,
 } from 'src/modules/calendar/common/standard-objects/calendar-channel.workspace-entity';
 import { AccountsToReconnectService } from 'src/modules/connected-account/services/accounts-to-reconnect.service';
 import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
+import { MarketingChannelType } from 'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity';
 import {
-  MessageChannelSyncStage,
-  type MessageChannelVisibility,
-  type MessageChannelWorkspaceEntity,
+    MessageChannelSyncStage,
+    type MessageChannelVisibility,
+    type MessageChannelWorkspaceEntity,
 } from 'src/modules/messaging/common/standard-objects/message-channel.workspace-entity';
 import {
-  MessagingMessageListFetchJob,
-  type MessagingMessageListFetchJobData,
+    MessagingMessageListFetchJob,
+    type MessagingMessageListFetchJobData,
 } from 'src/modules/messaging/message-import-manager/jobs/messaging-message-list-fetch.job';
 import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
 
@@ -60,6 +61,90 @@ export class GoogleAPIsService {
     private readonly updateConnectedAccountOnReconnectService: UpdateConnectedAccountOnReconnectService,
     private readonly googleAPIScopesService: GoogleAPIScopesService,
   ) {}
+
+  private async createMarketingChannelIfNeeded(
+    workspaceId: string,
+    connectedAccountId: string,
+    handle: string,
+    scopes: string[],
+  ): Promise<void> {
+    const hasAdsScope = scopes.includes(
+      'https://www.googleapis.com/auth/adwords',
+    );
+    const hasAnalyticsScope = scopes.includes(
+      'https://www.googleapis.com/auth/analytics.readonly',
+    );
+
+    if (!hasAdsScope && !hasAnalyticsScope) {
+      return;
+    }
+
+    const { MarketingChannelWorkspaceEntity } = await import(
+      'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity'
+    );
+    const {
+      MarketingChannelSyncStage,
+      MarketingChannelSyncStatus,
+    } = await import(
+      'src/modules/marketing/common/standard-objects/marketing-channel.workspace-entity'
+    );
+
+    const marketingChannelRepository =
+      await this.twentyORMGlobalManager.getRepositoryForWorkspace(
+        workspaceId,
+        'marketingChannel',
+      );
+
+    // Criar Google Ads channel
+    if (hasAdsScope) {
+      const existingAdsChannel = await marketingChannelRepository.findOne({
+        where: {
+          connectedAccountId,
+          type: MarketingChannelType.GOOGLE_ADS as any,
+        },
+      });
+
+      if (!existingAdsChannel) {
+        await marketingChannelRepository.save({
+          id: v4(),
+          connectedAccountId,
+          handle,
+          type: MarketingChannelType.GOOGLE_ADS as any,
+          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED as any,
+          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING as any,
+          isSyncEnabled: true,
+          throttleFailureCount: 0,
+          syncCursor: '',
+        });
+      }
+    }
+
+    // Criar Google Analytics channel
+    if (hasAnalyticsScope) {
+      const existingAnalyticsChannel = await marketingChannelRepository.findOne(
+        {
+          where: {
+            connectedAccountId,
+            type: MarketingChannelType.GOOGLE_ANALYTICS as any,
+          },
+        },
+      );
+
+      if (!existingAnalyticsChannel) {
+        await marketingChannelRepository.save({
+          id: v4(),
+          connectedAccountId,
+          handle,
+          type: MarketingChannelType.GOOGLE_ANALYTICS as any,
+          syncStatus: MarketingChannelSyncStatus.NOT_SYNCED as any,
+          syncStage: MarketingChannelSyncStage.ACCOUNT_SELECTION_PENDING as any,
+          isSyncEnabled: true,
+          throttleFailureCount: 0,
+          syncCursor: '',
+        });
+      }
+    }
+  }
 
   async refreshGoogleRefreshToken(input: {
     handle: string;
@@ -156,6 +241,14 @@ export class GoogleAPIsService {
               manager,
             });
           }
+
+          // Criar MarketingChannel(s) se tiver scopes de marketing
+          await this.createMarketingChannelIfNeeded(
+            workspaceId,
+            newOrExistingConnectedAccountId,
+            handle,
+            scopes,
+          );
         } else {
           await this.updateConnectedAccountOnReconnectService.updateConnectedAccountOnReconnect(
             {
@@ -200,6 +293,14 @@ export class GoogleAPIsService {
             connectedAccountId: newOrExistingConnectedAccountId,
             manager,
           });
+
+          // Criar/atualizar MarketingChannels também
+          await this.createMarketingChannelIfNeeded(
+            workspaceId,
+            newOrExistingConnectedAccountId,
+            handle,
+            scopes,
+          );
         }
       },
     );
